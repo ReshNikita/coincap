@@ -1,0 +1,50 @@
+@property --light-theme {
+  syntax: "<color>";
+  initial-value: #ffffff;
+  inherits: false;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+  margin-bottom: 20px;
+}
+
+.popularCrypto_block {
+  display: flex;
+  flex-direction: column;
+}
+.popularCrypto {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+}
+
+.total_block {
+  display: flex;
+}
+.total {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-left: 7px;
+}
+
+footer {
+  margin-top: auto;
+  bottom: 0;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.copyright {
+  text-align: center;
+  opacity: 0.8;
+  color: #000000;
+}
+
+.dark {
+  opacity: 0.8;
+  color: var(--light-theme);
+}

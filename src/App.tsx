@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC, lazy } from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import { LayoutComponent } from "./layout/LayoutComponent";
+import { MainPage } from "./pages/MainPage";
+import { withWrapper } from "./hoc/withWrapper";
+import { BASE_URL } from "./constants/constants";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const NotFoundPage = lazy(() =>
+  import("./pages/NotFoundPage").then(module => {
+    return { default: module.NotFoundPage };
+  })
+);
 
-export default App;
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path={`${BASE_URL}`} element={<LayoutComponent />}>
+        <Route index element={<MainPage />} />
+        <Route path="*" element={withWrapper(<NotFoundPage />)} />
+      </Route>
+    </Route>
+  )
+);
+
+export const App: FC = () => <RouterProvider router={router} />;
