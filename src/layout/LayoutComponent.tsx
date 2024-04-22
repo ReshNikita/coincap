@@ -24,5 +24,3 @@ export const LayoutComponent: FC = () => {
     </ConfigProvider>
   );
 };
-
-//#14161a

@@ -1,22 +1,13 @@
-import axios from "axios";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-type assets = {
-  id: string;
-  name: string;
-  maxSupply: string;
-  priceUsd: string;
-  rank: string;
-  supply: string;
-  symbol: string;
-};
+export const coincapApi = createApi({
+  reducerPath: "coincapApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api.coincap.io/v2" }),
+  endpoints: builder => ({
+    getCryptos: builder.query({
+      query: () => "/assets",
+    }),
+  }),
+});
 
-export const getAssets = async (): Promise<assets[] | undefined> => {
-  try {
-    const { data } = await axios.get("https://api.coincap.io/v2/assets");
-    console.log(data.data);
-
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+export const { useGetCryptosQuery } = coincapApi;

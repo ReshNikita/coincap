@@ -7,3 +7,13 @@ export type ErrorProps = {
   title: string;
   message: string;
 };
+
+export type cryptos = {
+  id: string;
+  name: string;
+  maxSupply: string;
+  priceUsd: string;
+  rank: string;
+  supply: string;
+  symbol: string;
+};

@@ -1,15 +1,12 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useAppSelector } from "../redux/hooks";
-import { getAssets } from "../api/coincapApi";
+import { CryptoTable } from "../components/CryptoTable";
 
 export const MainPage: FC = () => {
-  const [assets, setAssets] = useState();
-  getAssets();
   const { darkTheme } = useAppSelector(state => state.theme);
   return (
     <div className={`main ${darkTheme && "dark"}`}>
-      <h1>MAIN</h1>
-      <p>sdfd</p>
+      <CryptoTable />
     </div>
   );
 };
