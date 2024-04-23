@@ -9,11 +9,13 @@ export type ErrorProps = {
 };
 
 export type cryptos = {
-  id: string;
-  name: string;
-  maxSupply: string;
-  priceUsd: string;
+  key: string;
   rank: string;
-  supply: string;
+  name: string;
   symbol: string;
+  priceUsd: string;
+  marketCapUsd: string;
+  vwap24Hr: string;
+  changePercent24Hr: string;
+  id: string;
 };

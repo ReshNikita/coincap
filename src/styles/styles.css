@@ -21,6 +21,10 @@ header {
   padding-top: 10px;
 }
 
+.popularCryptoBlocks:not(:last-child) {
+  padding-right: 20px;
+}
+
 .total_block {
   display: flex;
 }
@@ -47,4 +51,17 @@ footer {
 .dark {
   opacity: 0.8;
   color: var(--light-theme);
+}
+
+.negativeNumb {
+  color: red;
+}
+
+.positiveNumb {
+  color: green;
+}
+
+.symbol {
+  color: #9a283b;
+  font-weight: 900;
 }
