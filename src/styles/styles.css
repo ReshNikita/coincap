@@ -4,11 +4,15 @@
   inherits: false;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 header {
   display: flex;
   justify-content: space-around;
   padding-top: 10px;
-  margin-bottom: 20px;
 }
 
 .popularCrypto_block {
@@ -18,7 +22,6 @@ header {
 .popularCrypto {
   display: flex;
   justify-content: space-around;
-  padding-top: 10px;
 }
 
 .popularCryptoBlocks:not(:last-child) {
@@ -64,4 +67,92 @@ footer {
 .symbol {
   color: #9a283b;
   font-weight: 900;
+}
+
+.cryptoTitle {
+  text-align: center;
+}
+
+.cryptoTitle_symbol {
+  border: 3px solid #ff4d4f;
+  padding: 6px;
+  margin-right: 10px;
+}
+
+.cryptoCardBlock {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.buyCryptoButton {
+  background-image: linear-gradient(
+    92.88deg,
+    #455eb5 9.16%,
+    #5643cc 43.89%,
+    #673fd7 64.72%
+  );
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  height: 3rem;
+  width: 50%;
+  padding: 0 1.2rem;
+  text-align: center;
+  text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+  transition: all 0.5s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.buyCryptoButton:hover {
+  box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+  transition-duration: 0.1s;
+}
+
+@media (min-width: 768px) {
+  .buyCryptoButton {
+    padding: 0 2.6rem;
+  }
+}
+
+.backButtonBlock {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+.backButton {
+  background-image: linear-gradient(
+    92.88deg,
+    #455eb5 9.16%,
+    #5643cc 43.89%,
+    #673fd7 64.72%
+  );
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 300;
+  height: 3rem;
+  width: 150px;
+  padding: 0 1.2rem;
+  text-align: center;
+  text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+  transition: all 0.5s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.backButton:hover {
+  box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+  transition-duration: 0.1s;
 }

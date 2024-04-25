@@ -2,11 +2,13 @@ import { FC } from "react";
 import { POPULAR_CRYPTO } from "../constants/constants";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { toggleTheme } from "../redux/themeSlice";
-import { Switch } from "antd";
+import { Switch, Typography } from "antd";
 import walletLogo from "../icons/wallet.svg";
 import { useGetCryptosQuery } from "../api/coincapApi";
 import { cryptos } from "../types/types";
 import millify from "millify";
+
+const { Title, Text } = Typography;
 
 export const Header: FC = () => {
   const { darkTheme } = useAppSelector(state => state.theme);
@@ -16,13 +18,14 @@ export const Header: FC = () => {
     ?.map((crypto: cryptos) => (
       <div className="popularCryptoBlocks" key={crypto.id}>
         <h3>{crypto.name}</h3>
-        <p>
+        <Text italic>
           $
           {millify(Number(crypto.priceUsd), {
+            units: ["", "B", "M", "K", "T"],
             precision: 2,
             lowercase: true,
           })}
-        </p>
+        </Text>
       </div>
     ))
     .slice(0, 3);
@@ -30,7 +33,9 @@ export const Header: FC = () => {
   return (
     <header>
       <div className={`popularCrypto_block ${darkTheme && "dark"}`}>
-        <h2>{POPULAR_CRYPTO}</h2>
+        <Title level={3}>
+          <Text underline>{POPULAR_CRYPTO}</Text>
+        </Title>
         <div className="popularCrypto">{popularCrypto}</div>
       </div>
       <Switch
@@ -45,7 +50,7 @@ export const Header: FC = () => {
         <img src={walletLogo} alt="wallet" width={"50px"} height={"50px"} />
         <div className="total">
           <h2>Total:</h2>
-          <p>$0 USD</p>
+          <p>0 USD</p>
         </div>
       </div>
     </header>

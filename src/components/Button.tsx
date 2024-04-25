@@ -3,7 +3,7 @@ import { FC, memo } from "react";
 type ButtonProps = {
   text: string;
   disabled?: boolean;
-  onClick: () => Promise<void> | void;
+  onClick?: () => Promise<void> | void;
   className: string;
 };
 
