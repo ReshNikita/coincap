@@ -14,7 +14,7 @@ const { Title } = Typography;
 const { Option } = Select;
 
 export const Crypto: FC = () => {
-  const { getNavigation } = useNavigateHook();
+  const { navigateTo } = useNavigateHook();
   const { id } = useParams();
   const [interval, setInterval] = useState("m1");
   const { data, isLoading } = useGetCryptoDetailQuery(id);
@@ -157,7 +157,7 @@ export const Crypto: FC = () => {
       />
       <div className="backButtonBlock">
         <Button
-          onClick={() => getNavigation("/coincap")}
+          onClick={() => navigateTo("/coincap")}
           className="backButton"
           text="Back"
         />

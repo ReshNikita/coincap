@@ -1,109 +1,143 @@
-import { FC, ReactElement, useEffect } from "react";
+import {
+  FC,
+  MouseEventHandler,
+  ReactElement,
+  useEffect,
+  useState,
+} from "react";
 import { Table } from "antd";
-import { useGetCryptosQuery } from "../api/coincapApi";
-import { cryptos } from "../types/types";
-import millify from "millify";
-import addIcon from "../icons/plus_add_icon1.svg";
-import { useNavigateHook } from "../hooks/useNavigateHook";
 import type { ColumnsType } from "antd/es/table";
+import { BuyCryptoModal } from "./BuyCryptoModal";
+import { useNavigateHook } from "../hooks/useNavigateHook";
+import { useGetCryptosQuery } from "../api/coincapApi";
+import { Nullable, cryptos } from "../types/types";
+import {
+  BASE_URL,
+  CENTER_ALIGN,
+  CRYPTO_TABLE_CONSTANTS,
+  DOLLAR_SIGN,
+} from "../constants/constants";
+import { formatPrice } from "../utils/formatPrice";
+import addIcon from "../icons/plus_add_icon1.svg";
 
 export const CryptoTable: FC = () => {
   const { data: cryptos, isLoading, refetch } = useGetCryptosQuery("");
-  const { getNavigation } = useNavigateHook();
+  const { navigateTo } = useNavigateHook();
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   useEffect(() => {
-    refetch();
-  }, [cryptos, refetch]);
+    const interval = setInterval(() => refetch(), 10000);
+    return () => clearInterval(interval);
+  }, [refetch]);
 
-  const formatNumber = (num: string): string =>
-    "$" +
-    millify(Number(num), {
-      units: ["", "B", "M", "K", "T"],
-      precision: 2,
-      lowercase: true,
-    });
+  const formatCellPrice = (price: string): string =>
+    DOLLAR_SIGN + formatPrice(price);
 
-  const getFormatChangePercent = (num: string): ReactElement => (
-    <span className={`${Number(num) >= 0 ? "positiveNumb" : "negativeNumb"}`}>
-      {formatNumber(num)}
+  const getFormatChangePercent = (percent: string): ReactElement => (
+    <span
+      className={`${Number(percent) >= 0 ? "positiveNumb" : "negativeNumb"}`}
+    >
+      {DOLLAR_SIGN + formatPrice(percent)}
     </span>
   );
 
-  const dataTable = cryptos?.data?.map((crypto: cryptos) => ({
-    key: crypto.id,
-    rank: crypto.rank,
-    name: crypto.name,
-    symbol: crypto.symbol,
-    priceUsd: crypto.priceUsd,
-    marketCapUsd: crypto.marketCapUsd,
-    vwap24Hr: crypto.vwap24Hr,
-    changePercent24Hr: crypto.changePercent24Hr,
-  }));
+  const dataTable: cryptos[] = cryptos?.data?.map(
+    ({
+      id,
+      rank,
+      name,
+      symbol,
+      priceUsd,
+      marketCapUsd,
+      vwap24Hr,
+      changePercent24Hr,
+    }: cryptos) => ({
+      key: id,
+      rank,
+      name,
+      symbol,
+      priceUsd,
+      marketCapUsd,
+      vwap24Hr,
+      changePercent24Hr,
+    })
+  );
 
-  enum ALIGN {
-    CENTER = "center",
-    RIGHT = "right",
-    LEFT = "left",
-  }
+  const {
+    altAddIcon,
+    rankColumn,
+    symbolColumn,
+    nameColumn,
+    vwapColumn,
+    changePercentColumn,
+    marketCapColumn,
+    priceColumn,
+    addCryptoColumn,
+  } = CRYPTO_TABLE_CONSTANTS;
+  const [selectedCrypto, setSelectedCrypto] = useState<Nullable<cryptos>>(null);
+
+  const addCurrency = (
+    record: cryptos
+  ): MouseEventHandler<HTMLImageElement> | void => {
+    setSelectedCrypto(record);
+    setOpenModal(!openModal);
+  };
 
   const columns: ColumnsType<cryptos> = [
+    rankColumn,
+    symbolColumn,
     {
-      title: "№",
-      dataIndex: "rank",
-      align: ALIGN.CENTER,
-      key: "rank",
-    },
-    {
-      title: "",
-      dataIndex: "symbol",
-      align: ALIGN.CENTER,
-      key: "symbol",
-      className: "symbol",
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      align: ALIGN.CENTER,
-      key: "name",
-      onCell: id => ({
-        onClick: () => getNavigation(`/coincap/${id.key}`),
+      title: nameColumn.title,
+      dataIndex: nameColumn.dataIndex,
+      align: CENTER_ALIGN,
+      key: nameColumn.key,
+      onCell: (crypto: cryptos) => ({
+        onClick: () => navigateTo(`${BASE_URL}/${crypto.key}`),
       }),
     },
     {
-      title: "VWAP(24Hr)",
-      dataIndex: "vwap24Hr",
-      align: ALIGN.CENTER,
-      key: "vwap24Hr",
-      render: formatNumber,
+      title: vwapColumn.title,
+      dataIndex: vwapColumn.dataIndex,
+      align: CENTER_ALIGN,
+      key: vwapColumn.key,
+      render: formatCellPrice,
     },
     {
-      title: "Change(24Hr)",
-      dataIndex: "changePercent24Hr",
-      align: ALIGN.CENTER,
-      key: "changePercent24Hr",
+      title: changePercentColumn.title,
+      dataIndex: changePercentColumn.dataIndex,
+      align: CENTER_ALIGN,
+      key: changePercentColumn.key,
       render: getFormatChangePercent,
     },
     {
-      title: "Market Cap",
-      dataIndex: "marketCapUsd",
-      align: ALIGN.CENTER,
-      key: "marketCapUsd",
-      render: formatNumber,
+      title: marketCapColumn.title,
+      dataIndex: marketCapColumn.dataIndex,
+      align: CENTER_ALIGN,
+      key: marketCapColumn.key,
+      render: formatCellPrice,
     },
     {
-      title: "Price",
-      dataIndex: "priceUsd",
-      align: ALIGN.CENTER,
-      key: "priceUsd",
-      render: formatNumber,
+      title: priceColumn.title,
+      dataIndex: priceColumn.dataIndex,
+      align: CENTER_ALIGN,
+      key: priceColumn.key,
+      render: formatCellPrice,
     },
     {
-      title: "",
-      key: "key",
-      align: ALIGN.CENTER,
+      title: addCryptoColumn.title,
+      key: addCryptoColumn.key,
+      align: CENTER_ALIGN,
       render: () => (
-        <img width={"25px"} height={"25px"} src={addIcon} alt="addIcon" />
+        <img
+          onClick={() => addCurrency}
+          className="addIcon"
+          src={addIcon}
+          alt={altAddIcon}
+        />
       ),
+      onCell: (record: cryptos) => ({
+        onClick: () => addCurrency(record),
+      }),
     },
   ];
 
@@ -116,6 +150,11 @@ export const CryptoTable: FC = () => {
         dataSource={dataTable}
         columns={columns}
         size="middle"
+      />
+      <BuyCryptoModal
+        selectedCrypto={selectedCrypto}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
       />
     </>
   );

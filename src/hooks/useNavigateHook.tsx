@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-export const useNavigateHook = (): { getNavigation: (url: string) => void } => {
+export const useNavigateHook = (): { navigateTo: (url: string) => void } => {
   const navigate = useNavigate();
-
-  const getNavigation = (url: string) => navigate(url);
-  return { getNavigation };
+  const navigateTo = (url: string) => navigate(url);
+  return { navigateTo };
 };

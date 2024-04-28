@@ -2,10 +2,12 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { errorSlice } from "./errorSlice";
 import { themeSlice } from "./themeSlice";
 import { coincapApi } from "../api/coincapApi";
+import { walletSlice } from "./walletSlice";
 
 const rootReducer = combineReducers({
   error: errorSlice.reducer,
   theme: themeSlice.reducer,
+  wallet: walletSlice.reducer,
   [coincapApi.reducerPath]: coincapApi.reducer,
 });
 

@@ -4,15 +4,24 @@ const headers = { "content-type": "application/json; charset=utf-8" };
 
 export const coincapApi = createApi({
   reducerPath: "coincapApi",
+
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.coincap.io/v2",
+
+    prepareHeaders: headers => {
+      headers.set("Content-type", "appliation/json");
+      return headers;
+    },
   }),
+  tagTypes: ["Cryptos"],
   endpoints: builder => ({
     getCryptos: builder.query({
       query: () => ({
         url: `/assets/`,
         headers: headers,
       }),
+      providesTags: ["Cryptos"],
+      transformResponse: ({ data }) => ({ data }),
     }),
     getCryptoDetail: builder.query({
       query: (id: string | undefined) => ({

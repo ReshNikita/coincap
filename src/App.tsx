@@ -41,6 +41,7 @@ export const App: FC = () => {
   const { darkTheme } = useAppSelector(state => state.theme);
   const { defaultAlgorithm, darkAlgorithm } = theme;
 
+  // localStorage.setItem("darkMode", JSON.stringify(darkTheme));
   return (
     <ConfigProvider
       theme={{

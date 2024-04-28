@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 type initialStateType = {
   darkTheme: boolean;
 };
-
+// JSON.parse(localStorage.getItem("darkMode") || "") ||
 const initialState: initialStateType = {
   darkTheme: false,
 };
