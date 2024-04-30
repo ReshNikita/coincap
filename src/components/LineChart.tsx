@@ -10,6 +10,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { cryptoHistoryType } from "../types";
+import { LineChartDataSets, LineChartOptionsTitle } from "../constants";
+import styles from "../styles/LineChart.module.scss";
 
 ChartJS.register(
   CategoryScale,
@@ -22,10 +25,14 @@ ChartJS.register(
 );
 
 type LineChartProps = {
-  cryptoHistory: any;
+  cryptoHistory: cryptoHistoryType;
   currentPrice: string;
   cryptoName: string;
 };
+
+const { priceChartOption, currentPriceOption, fontSizeOption, colorOption } =
+  LineChartOptionsTitle;
+const { label, backgroundColor, borderColor } = LineChartDataSets;
 
 export const LineChart: FC<LineChartProps> = ({
   cryptoHistory,
@@ -35,7 +42,7 @@ export const LineChart: FC<LineChartProps> = ({
   const cryptoPrice: number[] = [];
   const cryptoTimestamp: string[] = [];
   for (let i = 0; i < cryptoHistory?.data?.length; i += 1) {
-    cryptoPrice.push(cryptoHistory.data[i].priceUsd);
+    cryptoPrice.push(Number(cryptoHistory.data[i].priceUsd));
     cryptoTimestamp.push(
       new Date(cryptoHistory.data[i].time).toLocaleDateString()
     );
@@ -48,34 +55,29 @@ export const LineChart: FC<LineChartProps> = ({
       },
       title: {
         display: true,
-        text: [cryptoName + " price chart", "Current price: $" + currentPrice],
+        text: [
+          cryptoName + priceChartOption,
+          currentPriceOption + currentPrice,
+        ],
         font: {
-          size: 20,
+          size: fontSizeOption,
         },
-        color: "#ff4d4f",
+        color: colorOption,
       },
     },
   };
 
-  const data = {
+  const cryptoData = {
     labels: cryptoTimestamp,
     datasets: [
       {
-        label: "Price in usd",
+        label,
         data: cryptoPrice,
-        backgroundColor: "#673fd7",
-        borderColor: "#673fd7",
+        backgroundColor,
+        borderColor,
       },
     ],
   };
 
-  return (
-    <Line
-      data={data}
-      options={options}
-      style={{
-        padding: "15px",
-      }}
-    />
-  );
+  return <Line data={cryptoData} options={options} className={styles.line} />;
 };

@@ -9,14 +9,6 @@ body {
   height: 100%;
 }
 
-.popularCrypto_switch {
-  background-color: #636060 !important;
-}
-
-.popularCrypto_switch_light {
-  background-color: #420d55 !important;
-}
-
 .addIcon {
   width: 25px;
   height: 25px;
@@ -26,35 +18,10 @@ header {
   display: flex;
   justify-content: space-around;
   padding-top: 10px;
-}
+  margin-bottom: 10px;
 
-.popularCrypto_block {
-  display: flex;
-  flex-direction: column;
-}
-.popularCrypto {
-  display: flex;
-  justify-content: space-around;
-}
-
-.popularCryptoBlocks:not(:last-child) {
-  padding-right: 20px;
-}
-
-.total_block {
-  display: flex;
-}
-
-.total_block_image {
-  width: 50px;
-  height: 50px;
-}
-
-.total {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding-left: 7px;
+  /* border-bottom: 1px solid lightgray;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1); */
 }
 
 footer {
@@ -86,22 +53,6 @@ footer {
 .symbol {
   color: #9a283b;
   font-weight: 900;
-}
-
-.cryptoTitle {
-  text-align: center;
-}
-
-.cryptoTitle_symbol {
-  border: 3px solid #ff4d4f;
-  padding: 6px;
-  margin-right: 10px;
-}
-
-.cryptoCardBlock {
-  padding-top: 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .buyCryptoButton {
@@ -142,12 +93,6 @@ footer {
   }
 }
 
-.backButtonBlock {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 15px;
-}
-
 .backButton {
   background-image: linear-gradient(
     92.88deg,
@@ -174,4 +119,8 @@ footer {
 .backButton:hover {
   box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
   transition-duration: 0.1s;
+}
+
+.ant-modal-title {
+  text-align: center;
 }

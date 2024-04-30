@@ -10,34 +10,41 @@ import type { ColumnsType } from "antd/es/table";
 import { BuyCryptoModal } from "./BuyCryptoModal";
 import { useNavigateHook } from "../hooks/useNavigateHook";
 import { useGetCryptosQuery } from "../api/coincapApi";
-import { Nullable, cryptos } from "../types/types";
+import { Nullable, cryptos } from "../types";
 import {
   BASE_URL,
   CENTER_ALIGN,
-  CRYPTO_TABLE_CONSTANTS,
-  DOLLAR_SIGN,
-} from "../constants/constants";
-import { formatPrice } from "../utils/formatPrice";
+  addCryptoColumn,
+  altAddIcon,
+  changePercentColumn,
+  marketCapColumn,
+  nameColumn,
+  priceColumn,
+  rankColumn,
+  symbolColumn,
+  vwapColumn,
+} from "../constants";
+import { formatCellPrice } from "../utils/formatCellPrice";
 import addIcon from "../icons/plus_add_icon1.svg";
+
+const refetchInterval: number = 10000;
 
 export const CryptoTable: FC = () => {
   const { data: cryptos, isLoading, refetch } = useGetCryptosQuery("");
   const { navigateTo } = useNavigateHook();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedCrypto, setSelectedCrypto] = useState<Nullable<cryptos>>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => refetch(), 10000);
+    const interval = setInterval(() => refetch(), refetchInterval);
     return () => clearInterval(interval);
   }, [refetch]);
-
-  const formatCellPrice = (price: string): string =>
-    DOLLAR_SIGN + formatPrice(price);
 
   const getFormatChangePercent = (percent: string): ReactElement => (
     <span
       className={`${Number(percent) >= 0 ? "positiveNumb" : "negativeNumb"}`}
     >
-      {DOLLAR_SIGN + formatPrice(percent)}
+      {formatCellPrice(+percent)}
     </span>
   );
 
@@ -63,19 +70,6 @@ export const CryptoTable: FC = () => {
     })
   );
 
-  const {
-    altAddIcon,
-    rankColumn,
-    symbolColumn,
-    nameColumn,
-    vwapColumn,
-    changePercentColumn,
-    marketCapColumn,
-    priceColumn,
-    addCryptoColumn,
-  } = CRYPTO_TABLE_CONSTANTS;
-  const [selectedCrypto, setSelectedCrypto] = useState<Nullable<cryptos>>(null);
-
   const addCurrency = (
     record: cryptos
   ): MouseEventHandler<HTMLImageElement> | void => {
@@ -95,13 +89,7 @@ export const CryptoTable: FC = () => {
         onClick: () => navigateTo(`${BASE_URL}/${crypto.key}`),
       }),
     },
-    {
-      title: vwapColumn.title,
-      dataIndex: vwapColumn.dataIndex,
-      align: CENTER_ALIGN,
-      key: vwapColumn.key,
-      render: formatCellPrice,
-    },
+    vwapColumn,
     {
       title: changePercentColumn.title,
       dataIndex: changePercentColumn.dataIndex,
@@ -109,20 +97,8 @@ export const CryptoTable: FC = () => {
       key: changePercentColumn.key,
       render: getFormatChangePercent,
     },
-    {
-      title: marketCapColumn.title,
-      dataIndex: marketCapColumn.dataIndex,
-      align: CENTER_ALIGN,
-      key: marketCapColumn.key,
-      render: formatCellPrice,
-    },
-    {
-      title: priceColumn.title,
-      dataIndex: priceColumn.dataIndex,
-      align: CENTER_ALIGN,
-      key: priceColumn.key,
-      render: formatCellPrice,
-    },
+    marketCapColumn,
+    priceColumn,
     {
       title: addCryptoColumn.title,
       key: addCryptoColumn.key,

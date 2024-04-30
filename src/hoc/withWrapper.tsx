@@ -3,9 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Loader } from "../components/Loader";
 
 const ErrorPage = lazy(() =>
-  import("../pages/ErrorPage").then(module => {
-    return { default: module.ErrorPage };
-  })
+  import("../pages/ErrorPage").then(({ ErrorPage }) => ({ default: ErrorPage }))
 );
 
 export const withWrapper = (wrappedComponent: ReactNode): JSX.Element => (

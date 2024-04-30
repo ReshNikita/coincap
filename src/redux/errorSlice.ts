@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { ErrorProps, Nullable } from "../types/types";
+import { ErrorProps, Nullable } from "../types";
 
 type initialStateProps = {
   notification: Nullable<ErrorProps>;

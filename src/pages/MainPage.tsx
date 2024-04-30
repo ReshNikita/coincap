@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { useAppSelector } from "../redux/hooks";
 import { CryptoTable } from "../components/CryptoTable";
+import { useAppSelector } from "../redux/hooks";
 
 export const MainPage: FC = () => {
   const { darkTheme } = useAppSelector(state => state.theme);
   return (
-    <div className={`main ${darkTheme && "dark"}`}>
+    <main className={`main ${darkTheme && "dark"}`}>
       <CryptoTable />
-    </div>
+    </main>
   );
 };

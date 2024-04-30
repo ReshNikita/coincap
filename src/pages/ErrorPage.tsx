@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ERROR } from "../constants/constants";
+import { ERROR } from "../constants";
 
 type ErrorProps = {
   error: {

@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { getYear } from "../utils/getYear";
-import { COPYRIGHT } from "../constants/constants";
+import { COPYRIGHT } from "../constants";
 import { useAppSelector } from "../redux/hooks";
 
 export const Copyright: FC = memo(() => {

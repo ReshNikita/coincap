@@ -1,66 +1,60 @@
 import { FC, Dispatch, SetStateAction, useState } from "react";
-import { Button, Input, Modal } from "antd";
+import { InputNumberProps, Modal } from "antd";
+import { QuantityInput } from "./QuantityInput";
 import { useAppDispatch } from "../redux/hooks";
 import { addCrypto } from "../redux/walletSlice";
+import { Nullable, cryptos } from "../types";
+import { MODAL_TITLE } from "../constants";
 
 type BuyCryptoModalProps = {
   openModal: boolean;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
-  selectedCrypto: any;
+  selectedCrypto: Nullable<cryptos>;
 };
+
+const defaultAmount: number = 0;
+const modalWidth: number = 800;
 
 export const BuyCryptoModal: FC<BuyCryptoModalProps> = ({
   openModal,
   setOpenModal,
   selectedCrypto,
 }) => {
-  const handleCancel = () => setOpenModal(false);
+  const handleCancel = (): void => setOpenModal(!openModal);
   const dispatch = useAppDispatch();
-  const [amount, setAmount] = useState<number>(0);
-  const addToCart = () => {
-    const newCrypto = {
-      name: selectedCrypto.name,
-      key: selectedCrypto.key,
-      price: selectedCrypto.priceUsd,
-      amount,
-      total: amount * selectedCrypto.priceUsd,
-    };
-    dispatch(addCrypto(newCrypto));
-  };
+  const [amount, setAmount] = useState<number>(defaultAmount);
 
+  const addToCart = (): void => {
+    if (selectedCrypto) {
+      const { name, key, priceUsd } = selectedCrypto;
+      const addedCrypto = {
+        name,
+        key,
+        price: priceUsd,
+        amount,
+        total: amount * Number(priceUsd),
+      };
+      dispatch(addCrypto(addedCrypto));
+      setOpenModal(!openModal);
+      setAmount(defaultAmount);
+    }
+  };
+  const onChange: InputNumberProps["onChange"] = value =>
+    setAmount(value as number);
   return (
-    <>
-      <Modal
-        open={openModal}
-        title={`Buy crypto`}
-        style={{ textAlign: "center" }}
-        centered={true}
-        width={800}
-        onCancel={handleCancel}
-        footer={[
-          <div
-            key={Math.random()}
-            style={{ display: "flex", justifyContent: "center", gap: 40 }}
-          >
-            <Button onClick={addToCart} key="submit" type="primary">
-              Submit
-            </Button>
-            <Button key="back" onClick={handleCancel}>
-              Back
-            </Button>
-          </div>,
-        ]}
-      >
-        <Input
-          style={{ width: "50%" }}
-          size="large"
-          type="number"
-          placeholder="Type quantity..."
-          value={amount}
-          onChange={e => setAmount(+e.target.value)}
-          pattern="[0-9]*"
-        />
-      </Modal>
-    </>
+    <Modal
+      open={openModal}
+      onCancel={handleCancel}
+      title={MODAL_TITLE}
+      width={modalWidth}
+      centered={true}
+      footer={null}
+    >
+      <QuantityInput
+        amount={amount}
+        onChange={onChange}
+        addToCart={addToCart}
+      />
+    </Modal>
   );
 };

@@ -1,131 +1,163 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Typography, Card, Table, Select, InputNumberProps } from "antd";
+import millify from "millify";
+import { LineChart } from "./LineChart";
+import { QuantityInput } from "./QuantityInput";
+import { Button } from "../components/Button";
 import {
   useGetCryptoDetailQuery,
   useGetCryptoHistoryQuery,
 } from "../api/coincapApi";
-import { Typography, Card, InputNumber, Table, Select } from "antd";
-import { Button } from "../components/Button";
+import { addCrypto } from "../redux/walletSlice";
+import { useAppDispatch } from "../redux/hooks";
 import { useNavigateHook } from "../hooks/useNavigateHook";
-import millify from "millify";
-import { LineChart } from "./LineChart";
+import { formatCellPrice } from "../utils/formatCellPrice";
+import { cryptos } from "../types";
+import {
+  BACK_BUTTON,
+  BASE_URL,
+  ENTER_QUANTITY,
+  Intervals,
+  PERCENT_SIGN,
+  avgPriceRow,
+  costRow,
+  currencyDetailsColumn,
+  goodsVolumeRow,
+  infoColumn,
+  issuedAssets,
+  offerRow,
+  percantageChangeRow,
+  selectOptions,
+  websiteRow,
+} from "../constants";
+import styles from "../styles/Crypto.module.scss";
 
 const { Title } = Typography;
-const { Option } = Select;
+const defaultAmount: number = 0;
 
 export const Crypto: FC = () => {
   const { navigateTo } = useNavigateHook();
   const { id } = useParams();
-  const [interval, setInterval] = useState("m1");
+  const [interval, setInterval] = useState(Intervals.DAY);
   const { data, isLoading } = useGetCryptoDetailQuery(id);
-  const { data: cryptoHistory } = useGetCryptoHistoryQuery({ id, interval });
-  const cryptoDetails = data?.data;
-  const intervals = ["m1", "m5", "m15", "m30", "h1", "h2", "h6", "h12", "d1"];
-  const columns = [
-    {
-      title: "Info",
-      key: "info",
-      dataIndex: "info",
-    },
-    {
-      title: "Currency details",
-      key: "details",
-      dataIndex: "details",
-    },
-  ];
+  const { data: cryptoHistory } = useGetCryptoHistoryQuery({
+    id,
+    interval,
+  });
+  const [amount, setAmount] = useState<number>(defaultAmount);
+  const dispatch = useAppDispatch();
+  const cryptoDetails: cryptos = data?.data;
+
+  const {
+    priceUsd,
+    supply,
+    maxSupply,
+    volumeUsd24Hr,
+    vwap24Hr,
+    changePercent24Hr,
+    explorer,
+    symbol,
+    name,
+  } = cryptoDetails || {};
+
+  const columns = [infoColumn, currencyDetailsColumn];
 
   const cryptoDetailsDataSource = [
     {
-      info: "Cost",
-      key: "info",
-      details: millify(Number(cryptoDetails?.priceUsd)) + " $",
+      info: costRow.info,
+      key: costRow.key,
+      details: formatCellPrice(priceUsd),
     },
     {
-      info: "Available offer for trading",
-      key: "details",
-      details: millify(Number(cryptoDetails?.supply)),
+      info: offerRow.info,
+      key: offerRow.key,
+      details: formatCellPrice(supply).slice(1),
     },
     {
-      info: "Total number of issued assets",
-      key: "issued",
-      details: millify(Number(cryptoDetails?.maxSupply)),
+      info: issuedAssets.info,
+      key: issuedAssets.key,
+      details: formatCellPrice(maxSupply).slice(1),
     },
     {
-      info: "Volume of goods for the last 24 hours",
-      key: "volume",
-      details: millify(Number(cryptoDetails?.volumeUsd24Hr)),
+      info: goodsVolumeRow.info,
+      key: goodsVolumeRow.key,
+      details: formatCellPrice(volumeUsd24Hr).slice(1),
     },
     {
-      info: "Average price by volume over the last 24 hours",
-      key: "avgPrice",
-      details: millify(Number(cryptoDetails?.vwap24Hr)) + " $",
+      info: avgPriceRow.info,
+      key: avgPriceRow.key,
+      details: formatCellPrice(vwap24Hr),
     },
     {
-      info: "Percentage change in price over the last 24 hours",
-      key: "percantage",
+      info: percantageChangeRow.info,
+      key: percantageChangeRow.key,
       details: (
         <span
           className={`${
-            Number(cryptoDetails?.changePercent24Hr) >= 0
-              ? "positiveNumb"
-              : "negativeNumb"
+            Number(changePercent24Hr) >= 0
+              ? styles.positiveNumb
+              : styles.negativeNumb
           }`}
         >
-          {millify(Number(cryptoDetails?.changePercent24Hr))} %
+          {formatCellPrice(changePercent24Hr).slice(1)}
+          {PERCENT_SIGN}
         </span>
       ),
     },
     {
-      info: "Website",
-      key: "website",
+      info: websiteRow.info,
+      key: websiteRow.key,
       details: (
         <a
-          style={{ textDecoration: "underline" }}
-          href={cryptoDetails?.explorer}
+          href={explorer}
           rel="noreferrer"
           target="_blank"
+          className={styles.webSiteLink}
         >
-          {cryptoDetails?.explorer}
+          {explorer}
         </a>
       ),
     },
   ];
+
+  const onChange: InputNumberProps["onChange"] = value =>
+    setAmount(value as number);
+
+  const addToCart = (): void => {
+    const { name, id, priceUsd } = cryptoDetails;
+    if (cryptoDetails) {
+      const addedCrypto = {
+        name,
+        key: id,
+        price: priceUsd,
+        amount,
+        total: amount * Number(priceUsd),
+      };
+      dispatch(addCrypto(addedCrypto));
+      setAmount(defaultAmount);
+    }
+  };
   return (
     <main>
-      <div className="cryptoTitle">
+      <div className={styles.cryptoTitle}>
         <Title type="danger">
-          <span className="cryptoTitle_symbol"> {cryptoDetails?.symbol}</span>
-          {cryptoDetails?.name}
+          <span className={styles.cryptoTitle_symbol}> {symbol}</span>
+          {name}
         </Title>
       </div>
-      <div className="cryptoCardBlock">
+      <div className={styles.cryptoCardBlock}>
         <Card
           loading={isLoading}
-          title="Enter quantity:"
+          title={ENTER_QUANTITY}
           bordered={false}
-          style={{ width: 300, textAlign: "center", marginBottom: "15px" }}
+          className={styles.cryptoCardBlock_card}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <InputNumber
-              autoFocus={true}
-              min={0}
-              type="number"
-              status="error"
-              style={{ marginBottom: "10px", width: "100%" }}
-            />
-            <Button
-              text="Buy"
-              // onClick={() => }
-              className="buyCryptoButton"
-            />
-          </div>
+          <QuantityInput
+            onChange={onChange}
+            amount={amount}
+            addToCart={addToCart}
+          />
         </Card>
       </div>
       <Table
@@ -136,30 +168,25 @@ export const Crypto: FC = () => {
         dataSource={cryptoDetailsDataSource}
         pagination={false}
       />
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
-      >
+      <div className={styles.selectBlock}>
         <Select
+          options={selectOptions}
           defaultValue={interval}
-          placeholder="Select time period"
+          loading={isLoading}
           onChange={value => setInterval(value)}
           dropdownStyle={{ width: "20em" }}
-        >
-          {intervals.map(date => (
-            <Option key={date}>{date}</Option>
-          ))}
-        </Select>
+        />
       </div>
       <LineChart
         cryptoHistory={cryptoHistory}
-        currentPrice={millify(Number(cryptoDetails?.priceUsd))}
-        cryptoName={cryptoDetails?.name}
+        currentPrice={millify(Number(priceUsd))}
+        cryptoName={name}
       />
-      <div className="backButtonBlock">
+      <div className={styles.backButtonBlock}>
         <Button
-          onClick={() => navigateTo("/coincap")}
-          className="backButton"
-          text="Back"
+          onClick={() => navigateTo(BASE_URL)}
+          className={styles.backButton}
+          text={BACK_BUTTON}
         />
       </div>
     </main>

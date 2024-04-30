@@ -1,11 +1,12 @@
 import { FC } from "react";
 import { Button } from "../components/Button";
 import { useNavigateHook } from "../hooks/useNavigateHook";
-import { BASE_URL, NOT_FOUND_PAGE } from "../constants/constants";
+import { BASE_URL, NOT_FOUND_PAGE } from "../constants";
+
+const { OOPS_YOU_LOST, GET_BACK, BACK_BUTTON, ERROR_404 } = NOT_FOUND_PAGE;
 
 export const NotFoundPage: FC = () => {
   const { navigateTo } = useNavigateHook();
-  const { OOPS_YOU_LOST, GET_BACK, BACK_BUTTON, ERROR_404 } = NOT_FOUND_PAGE;
   return (
     <main>
       <div>

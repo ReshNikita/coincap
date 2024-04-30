@@ -1,4 +1,3 @@
-export const types = {};
 export type Nullable<T> = T | null;
 
 export type Falsy<T> = T | null | undefined | false;
@@ -18,4 +17,19 @@ export type cryptos = {
   vwap24Hr: string;
   changePercent24Hr: string;
   id: string;
+  maxSupply: string;
+  supply: string;
+  explorer: string;
+  volumeUsd24Hr: string;
+};
+
+export type cryptoHistoryData = {
+  date: string;
+  priceUsd: string;
+  time: number;
+};
+
+export type cryptoHistoryType = {
+  data: cryptoHistoryData[];
+  timestamp: number;
 };
