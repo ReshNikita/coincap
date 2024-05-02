@@ -1,38 +1,32 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-const headers = { "content-type": "application/json; charset=utf-8" };
+import { AssetsType, CryptoDetailType, cryptoHistoryType } from "../types";
 
 export const coincapApi = createApi({
   reducerPath: "coincapApi",
-
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.coincap.io/v2",
-
     prepareHeaders: headers => {
-      headers.set("Content-type", "appliation/json");
+      headers.set("authorization", `Bearer ${process.env.API_KEY}`);
       return headers;
     },
   }),
-  tagTypes: ["Cryptos"],
   endpoints: builder => ({
-    getCryptos: builder.query({
+    getCryptos: builder.query<AssetsType, unknown>({
       query: () => ({
         url: `/assets/`,
-        headers: headers,
       }),
-      providesTags: ["Cryptos"],
-      transformResponse: ({ data }) => ({ data }),
     }),
-    getCryptoDetail: builder.query({
-      query: (id: string | undefined) => ({
+    getCryptoDetail: builder.query<CryptoDetailType, string>({
+      query: id => ({
         url: `/assets/${id}`,
-        headers: headers,
       }),
     }),
-    getCryptoHistory: builder.query({
+    getCryptoHistory: builder.query<
+      cryptoHistoryType,
+      { id: string; interval: string }
+    >({
       query: ({ id, interval }) => ({
         url: `/assets/${id}/history?interval=${interval}`,
-        headers: headers,
       }),
     }),
   }),

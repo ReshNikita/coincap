@@ -1,14 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
-type CurrencyCountType = {
-  key: string;
-  amount: number;
-  total: number;
-  name: string;
-  id?: string;
-  count?: number;
-  price: string;
-};
+import { CurrencyCountType } from "../types";
 
 type initialStateType = {
   currencies: CurrencyCountType[];

@@ -1,7 +1,13 @@
-import { InputNumber } from "antd";
 import { FC, useEffect, useRef } from "react";
-import { Button } from "./Button";
+import { InputNumber } from "antd";
 import { valueType } from "antd/es/statistic/utils";
+import { Button } from "./Button";
+import {
+  buyButton,
+  inputNumberPattern,
+  inputNumberPlaceholder,
+} from "../constants";
+import styles from "../styles/QuantityInput.module.scss";
 
 type QuantityInputProps = {
   amount: number;
@@ -16,31 +22,26 @@ export const QuantityInput: FC<QuantityInputProps> = ({
 }) => {
   const inputFocus = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    if (inputFocus.current) {
-      inputFocus.current.focus();
-    }
+    inputFocus.current && inputFocus.current.focus();
   }, []);
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className={styles.quantutyInputBlock}>
       <InputNumber
         size="large"
         type="number"
-        style={{ marginBottom: "10px", width: "50%" }}
+        className={styles.inputNumber}
         value={amount}
         onChange={onChange}
-        pattern="[0-9]*"
-        placeholder="Type quantity..."
+        pattern={inputNumberPattern}
+        placeholder={inputNumberPlaceholder}
         onPressEnter={addToCart}
         ref={inputFocus}
       />
-      <Button text="Buy" onClick={addToCart} className="buyCryptoButton" />
+      <Button
+        text={buyButton}
+        onClick={addToCart}
+        className={styles.buyCryptoButton}
+      />
     </div>
   );
 };

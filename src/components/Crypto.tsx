@@ -13,7 +13,7 @@ import { addCrypto } from "../redux/walletSlice";
 import { useAppDispatch } from "../redux/hooks";
 import { useNavigateHook } from "../hooks/useNavigateHook";
 import { formatCellPrice } from "../utils/formatCellPrice";
-import { cryptos } from "../types";
+import { cryptoHistoryType, cryptos } from "../types";
 import {
   BACK_BUTTON,
   BASE_URL,
@@ -38,16 +38,18 @@ const defaultAmount: number = 0;
 
 export const Crypto: FC = () => {
   const { navigateTo } = useNavigateHook();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [interval, setInterval] = useState(Intervals.DAY);
-  const { data, isLoading } = useGetCryptoDetailQuery(id);
-  const { data: cryptoHistory } = useGetCryptoHistoryQuery({
+  const { data, isLoading } = useGetCryptoDetailQuery(id as string);
+  const { data: cryptoHistory } = useGetCryptoHistoryQuery<{
+    data: cryptoHistoryType;
+  }>({
     id,
     interval,
-  });
+  } as { id: string; interval: string });
   const [amount, setAmount] = useState<number>(defaultAmount);
   const dispatch = useAppDispatch();
-  const cryptoDetails: cryptos = data?.data;
+  const cryptoDetails = data?.data as cryptos;
 
   const {
     priceUsd,
@@ -141,7 +143,7 @@ export const Crypto: FC = () => {
   return (
     <main>
       <div className={styles.cryptoTitle}>
-        <Title type="danger">
+        <Title level={2} type="danger" className={styles.title}>
           <span className={styles.cryptoTitle_symbol}> {symbol}</span>
           {name}
         </Title>
@@ -174,14 +176,16 @@ export const Crypto: FC = () => {
           defaultValue={interval}
           loading={isLoading}
           onChange={value => setInterval(value)}
-          dropdownStyle={{ width: "20em" }}
+          className={styles.select}
         />
       </div>
-      <LineChart
-        cryptoHistory={cryptoHistory}
-        currentPrice={millify(Number(priceUsd))}
-        cryptoName={name}
-      />
+      <div className={styles.lineChartBlock}>
+        <LineChart
+          cryptoHistory={cryptoHistory}
+          currentPrice={millify(Number(priceUsd))}
+          cryptoName={name}
+        />
+      </div>
       <div className={styles.backButtonBlock}>
         <Button
           onClick={() => navigateTo(BASE_URL)}

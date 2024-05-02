@@ -1,8 +1,22 @@
-@property --light-theme {
-  syntax: "<color>";
-  initial-value: #ffffff;
-  inherits: false;
+$whiteColor: #ffffff;
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 10px;
+  margin-bottom: 10px;
 }
+
+@media (max-width: 410px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+/* border-bottom: 1px solid lightgray;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1); */
 
 .popularCryptoBlocks:not(:last-child) {
   padding-right: 20px;
@@ -10,7 +24,7 @@
 
 .dark {
   opacity: 0.8;
-  color: var(--light-theme);
+  color: $whiteColor;
 }
 
 .popularCrypto {

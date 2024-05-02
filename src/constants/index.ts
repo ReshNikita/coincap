@@ -1,4 +1,4 @@
-import { formatCellPrice } from "../utils/formatCellPrice";
+import { SortOrder } from "antd/es/table/interface";
 
 export const BASE_URL: string = "/coincap";
 
@@ -33,15 +33,12 @@ export const CRYPTO_TABLE_CONSTANTS = {
   rankColumn: {
     title: "№",
     dataIndex: "rank",
-    align: CENTER_ALIGN,
     key: "rank",
   },
   symbolColumn: {
     title: "",
     dataIndex: "symbol",
-    align: CENTER_ALIGN,
     key: "symbol",
-    className: "symbol",
   },
   nameColumn: {
     title: "Name",
@@ -51,9 +48,7 @@ export const CRYPTO_TABLE_CONSTANTS = {
   vwapColumn: {
     title: "VWAP(24Hr)",
     dataIndex: "vwap24Hr",
-    align: CENTER_ALIGN,
     key: "vwap24Hr",
-    render: formatCellPrice,
   },
   changePercentColumn: {
     title: "Change(24Hr)",
@@ -63,19 +58,16 @@ export const CRYPTO_TABLE_CONSTANTS = {
   marketCapColumn: {
     title: "Market Cap",
     dataIndex: "marketCapUsd",
-    align: CENTER_ALIGN,
     key: "marketCapUsd",
-    render: formatCellPrice,
   },
   priceColumn: {
     title: "Price",
     dataIndex: "priceUsd",
-    align: CENTER_ALIGN,
     key: "priceUsd",
-    render: formatCellPrice,
   },
   addCryptoColumn: {
     title: "",
+    dataIndex: "addCryptoColumn",
     key: "addCryptoColumn",
   },
 } as const;
@@ -91,6 +83,8 @@ export const {
   priceColumn,
   addCryptoColumn,
 } = CRYPTO_TABLE_CONSTANTS;
+
+export const SORT_DIRECTIONS: SortOrder[] = ["descend", "ascend"];
 
 export const MODAL_TITLE: string = "Buy crypto:";
 
@@ -201,3 +195,18 @@ export const LineChartDataSets = {
   backgroundColor: "#673fd7",
   borderColor: "#673fd7",
 } as const;
+
+export const inputNumberPlaceholder: string = "Type quantity...";
+export const inputNumberPattern: string = "[0-9]*";
+
+export const buyButton: string = "BUY";
+
+export const WalletModal = {
+  modalTitle: "Your wallet",
+  walletEmpty: "It is empty for now",
+  totalSumHeading: "Total: " + DOLLAR_SIGN,
+  deleteButtonAlt: "deleteButton",
+};
+
+export const { modalTitle, walletEmpty, totalSumHeading, deleteButtonAlt } =
+  WalletModal;

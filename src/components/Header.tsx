@@ -32,7 +32,7 @@ export const Header: FC = () => {
     .slice(firstPopularCrypto, thirdPopularCrypto);
 
   return (
-    <header>
+    <header className={styles.header}>
       <div className={`${darkTheme && styles.dark}`}>
         <Title level={3}>
           <Text underline>{popular_crypto}</Text>

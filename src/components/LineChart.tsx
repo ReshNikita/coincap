@@ -48,7 +48,22 @@ export const LineChart: FC<LineChartProps> = ({
     );
   }
   const options = {
+    maintainAspectRatio: false,
     responsive: true,
+    scales: {
+      y: {
+        stacked: true,
+        grid: {
+          display: true,
+          color: "rgba(255,99,132,0.2)",
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
     plugins: {
       legend: {
         position: "top" as const,

@@ -33,3 +33,23 @@ export type cryptoHistoryType = {
   data: cryptoHistoryData[];
   timestamp: number;
 };
+
+export type AssetsType = {
+  data: cryptos[];
+  timestamp: number;
+};
+
+export type CryptoDetailType = {
+  data: cryptos;
+  timestamp: number;
+};
+
+export type CurrencyCountType = {
+  key: string;
+  amount: number;
+  total: number;
+  name: string;
+  id?: string;
+  count?: number;
+  price: string;
+};

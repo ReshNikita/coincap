@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+@media (max-width: 410px) {
+  .title {
+    font-size: 20px !important;
+  }
+}
+
 .cryptoTitle_symbol {
   border: 3px solid #ff4d4f;
   padding: 6px;
@@ -18,6 +24,12 @@
   width: 300px;
   text-align: center;
   margin-bottom: 15px;
+}
+
+@media (max-width: 410px) {
+  .cryptoCardBlock_card {
+    max-width: 250px;
+  }
 }
 
 .selectBlock {
@@ -70,4 +82,14 @@
 .backButton:hover {
   box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
   transition-duration: 0.1s;
+}
+.select {
+  width: 120px;
+}
+
+.lineChartBlock {
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+  position: relative;
 }
