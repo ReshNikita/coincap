@@ -42,7 +42,7 @@ export const WalletTable: FC<WalletTableProps> = ({ handleTotalChange }) => {
       render: (text: any) => <h4>${Math.round(text * 1000) / 1000}</h4>,
     },
     {
-      title: "Sell",
+      title: "",
       dataIndex: "sell",
       key: "sell",
       render: () => (

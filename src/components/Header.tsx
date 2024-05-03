@@ -40,6 +40,7 @@ export const Header: FC = () => {
         <div className={styles.popularCrypto}>{popularCrypto}</div>
       </div>
       <Switch
+        checked={darkTheme}
         checkedChildren="Dark"
         unCheckedChildren="Light"
         onChange={() => {

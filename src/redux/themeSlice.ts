@@ -3,9 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 type initialStateType = {
   darkTheme: boolean;
 };
-// JSON.parse(localStorage.getItem("darkMode") || "") ||
 const initialState: initialStateType = {
-  darkTheme: false,
+  darkTheme: localStorage.getItem("darkMode") === "true",
 };
 
 export const themeSlice = createSlice({
@@ -14,6 +13,7 @@ export const themeSlice = createSlice({
   reducers: {
     toggleTheme: state => {
       state.darkTheme = !state.darkTheme;
+      localStorage.setItem("darkMode", state.darkTheme.toString());
     },
   },
 });
