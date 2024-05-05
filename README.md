@@ -7,8 +7,10 @@ Single page application for tracking cryptocurrencies and building your own port
 Here you see a list (table) of cryptocurrencies with basic information about them, and you can add them to your portfolio.
 
 <div>
-    <img width="911" alt="mainPage" src='../mainPageScreen.png'/>
+    <img width="1423" alt="mainPageScreen" src="https://github.com/ReshNikita/coincap/assets/122251467/519989f4-c115-4417-b72d-c84c833f6b81">
 </div>
+
+# Project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
