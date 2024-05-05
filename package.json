@@ -1,6 +1,6 @@
 {
-  "name": "coincap",
   "homepage": "https://reshnikita.github.io/coincap",
+  "name": "coincap",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,6 +28,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -52,6 +54,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.23.4",
+    "gh-pages": "^6.1.1",
     "sass": "^1.75.0"
   }
 }
