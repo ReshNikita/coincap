@@ -10,8 +10,26 @@ import walletLogo from "../icons/wallet.svg";
 import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/Header.module.scss";
 
+const {
+  popularCryptoBlocks,
+  headerClass,
+  dark,
+  popularCryptoClass,
+  popularCrypto_switch_light,
+  popularCrypto_switch,
+  total_block,
+  total_block_image,
+  totalClass,
+} = styles;
 const { Title, Text } = Typography;
-const { popular_crypto, total, usd, altWalletImg } = HEADER_CONSTANTS;
+const {
+  popular_crypto,
+  total,
+  usd,
+  altWalletImg,
+  switchChecked,
+  switchUnchecked,
+} = HEADER_CONSTANTS;
 const firstPopularCrypto: number = 0;
 const thirdPopularCrypto: number = 3;
 
@@ -24,45 +42,43 @@ export const Header: FC = () => {
 
   const popularCrypto = cryptos?.data
     ?.map(({ id, name, priceUsd }: cryptos) => (
-      <div className={styles.popularCryptoBlocks} key={id}>
+      <div className={popularCryptoBlocks} key={id}>
         <h3>{name}</h3>
-        <Text italic>{formatCellPrice(+priceUsd)}</Text>
+        <Text italic>{formatCellPrice(+priceUsd, true)}</Text>
       </div>
     ))
     .slice(firstPopularCrypto, thirdPopularCrypto);
 
   return (
-    <header className={styles.header}>
-      <div className={`${darkTheme && styles.dark}`}>
+    <header className={headerClass}>
+      <div className={`${darkTheme && dark}`}>
         <Title level={3}>
           <Text underline>{popular_crypto}</Text>
         </Title>
-        <div className={styles.popularCrypto}>{popularCrypto}</div>
+        <div className={popularCryptoClass}>{popularCrypto}</div>
       </div>
       <Switch
         checked={darkTheme}
-        checkedChildren="Dark"
-        unCheckedChildren="Light"
+        checkedChildren={switchChecked}
+        unCheckedChildren={switchUnchecked}
         onChange={() => {
           dispatch(toggleTheme());
         }}
         className={
-          darkTheme
-            ? styles.popularCrypto_switch_light
-            : styles.popularCrypto_switch
+          darkTheme ? popularCrypto_switch_light : popularCrypto_switch
         }
       />
-      <div className={`${styles.total_block} ${darkTheme && styles.dark}`}>
+      <div className={`${total_block} ${darkTheme && dark}`}>
         <img
           onClick={() => setVisible(!visible)}
           src={walletLogo}
           alt={altWalletImg}
-          className={styles.total_block_image}
+          className={total_block_image}
         />
-        <div className={styles.total}>
+        <div className={totalClass}>
           <h2>{total}</h2>
           <p>
-            {formatCellPrice(totalQuantity)}
+            {formatCellPrice(totalQuantity, true)}
             &nbsp;{usd}
           </p>
         </div>

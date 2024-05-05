@@ -1,10 +1,17 @@
 import millify from "millify";
 import { DOLLAR_SIGN } from "../constants";
 
-export const formatCellPrice = (price: string | number): string =>
-  DOLLAR_SIGN +
-  millify(Number(price), {
-    units: ["", "B", "M", "K", "T"],
-    precision: 2,
-    lowercase: true,
-  });
+export const formatCellPrice = (
+  price: string | number,
+  includeDollarSign: boolean
+): string => {
+  const formatWithMillify = (num: number | string) =>
+    millify(Number(num), {
+      units: ["", "K", "M", "B", "T"],
+      precision: 2,
+      lowercase: true,
+    });
+  return includeDollarSign
+    ? `${DOLLAR_SIGN}${formatWithMillify(Number(price))}`
+    : formatWithMillify(Number(price));
+};

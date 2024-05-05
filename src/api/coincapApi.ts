@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AssetsType, CryptoDetailType, cryptoHistoryType } from "../types";
 
+const COINCAP_API: string = "https://api.coincap.io/v2";
+
 export const coincapApi = createApi({
   reducerPath: "coincapApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.coincap.io/v2",
+    baseUrl: COINCAP_API,
     prepareHeaders: headers => {
-      headers.set("authorization", `Bearer ${process.env.API_KEY}`);
+      headers.set("Authorization", `Bearer ${process.env.API_KEY}`);
       return headers;
     },
   }),

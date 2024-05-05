@@ -34,7 +34,7 @@ export const BuyCryptoModal: FC<BuyCryptoModalProps> = ({
         amount,
         total: amount * Number(priceUsd),
       };
-      dispatch(addCrypto(addedCrypto));
+      amount > 0 && dispatch(addCrypto(addedCrypto));
       setOpenModal(!openModal);
       setAmount(defaultAmount);
     }

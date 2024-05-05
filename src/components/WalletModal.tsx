@@ -2,61 +2,65 @@ import { Modal } from "antd";
 import { FC, useState, Dispatch, SetStateAction, ReactElement } from "react";
 import { WalletTable } from "./WalletTable";
 import { useAppSelector } from "../redux/hooks";
-import { modalTitle, totalSumHeading } from "../constants";
+import { walletModalTitle, totalSumHeading, PERCENT_SIGN } from "../constants";
 import styles from "../styles/WalletModal.module.scss";
 import { formatCellPrice } from "../utils/formatCellPrice";
 
+const { positiveNumb, negativeNumb, modalTitle, walletModalBlock } = styles;
+const modalWidth: number = 700;
 type WalletModalProps = {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
 };
 
 export const WalletModal: FC<WalletModalProps> = ({ visible, setVisible }) => {
-  const [total, setTotal] = useState(0);
-  const [previousTotal, setPreviousTotal] = useState(0);
+  const [total, setTotal] = useState<number>(0);
+  const [previousTotal, setPreviousTotal] = useState<number>(0);
   const handleTotalChange = (value: number) => {
     setPreviousTotal(total);
     setTotal(value);
   };
-
   const { totalQuantity } = useAppSelector(state => state.wallet);
 
-  const slash = (n: number) => Math.round(n * 1000) / 1000;
-
-  const totalSum = slash(totalQuantity);
-  const difResult = slash(totalSum - previousTotal);
-  const difference = difResult > 0 ? "+" + difResult : difResult;
-  const percentageChange = slash(
-    (totalSum - previousTotal / previousTotal) * 100
-  );
+  const latestTransaction = (totalQuantity - previousTotal).toFixed(2);
+  let percent = +((+latestTransaction / previousTotal) * 100).toFixed(2);
+  if (previousTotal === 0) percent = 100;
+  if (+latestTransaction === 0) percent = 100;
+  if (totalQuantity === 0 && +latestTransaction === 0) percent = 0;
 
   const getFormatChangePercent = (percent: string | number): ReactElement => (
-    <span
-      className={`${
-        Number(percent) >= 0 ? styles.positiveNumb : styles.negativeNumb
-      }`}
-    >
-      {formatCellPrice(+percent)}
+    <span className={`${Number(percent) >= 0 ? positiveNumb : negativeNumb}`}>
+      {formatCellPrice(percent, false)}
+      {PERCENT_SIGN}
     </span>
   );
 
   return (
     <Modal
       open={visible}
-      title={<h2 className={styles.modalTitle}>{modalTitle}</h2>}
+      title={<h2 className={modalTitle}>{walletModalTitle}</h2>}
       onCancel={() => setVisible(!visible)}
       footer={null}
-      width={700}
+      width={modalWidth}
     >
       <WalletTable handleTotalChange={handleTotalChange} />
-      <h2>
-        {totalSumHeading}
-        <span>{totalSum} </span>
-      </h2>
-      <h3>
-        <span>{getFormatChangePercent(difference)}$</span> (
-        {isNaN(percentageChange) ? 0 : percentageChange}%)
-      </h3>
+      <div className={walletModalBlock}>
+        <h2>
+          {totalSumHeading}
+          {totalQuantity}
+        </h2>
+        <h2>
+          <span
+            className={`${
+              Number(latestTransaction) >= 0 ? positiveNumb : negativeNumb
+            }`}
+          >
+            {formatCellPrice(latestTransaction, true)}
+          </span>
+          &nbsp;
+          <span>{getFormatChangePercent(percent)}</span>
+        </h2>
+      </div>
     </Modal>
   );
 };

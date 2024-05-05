@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Typography, Card, Table, Select, InputNumberProps } from "antd";
-import millify from "millify";
 import { LineChart } from "./LineChart";
 import { QuantityInput } from "./QuantityInput";
 import { Button } from "../components/Button";
@@ -35,6 +34,21 @@ import styles from "../styles/Crypto.module.scss";
 
 const { Title } = Typography;
 const defaultAmount: number = 0;
+const {
+  backButton,
+  positiveNumb,
+  negativeNumb,
+  webSiteLink,
+  cryptoTitle_block,
+  cryptoTitle_block_title,
+  cryptoTitle_symbol,
+  cryptoCardBlock,
+  cryptoCardBlock_card,
+  selectBlock,
+  select,
+  lineChartBlock,
+  backButtonBlock,
+} = styles;
 
 export const Crypto: FC = () => {
   const { navigateTo } = useNavigateHook();
@@ -69,27 +83,27 @@ export const Crypto: FC = () => {
     {
       info: costRow.info,
       key: costRow.key,
-      details: formatCellPrice(priceUsd),
+      details: formatCellPrice(priceUsd, true),
     },
     {
       info: offerRow.info,
       key: offerRow.key,
-      details: formatCellPrice(supply).slice(1),
+      details: formatCellPrice(supply, false),
     },
     {
       info: issuedAssets.info,
       key: issuedAssets.key,
-      details: formatCellPrice(maxSupply).slice(1),
+      details: formatCellPrice(maxSupply, false),
     },
     {
       info: goodsVolumeRow.info,
       key: goodsVolumeRow.key,
-      details: formatCellPrice(volumeUsd24Hr).slice(1),
+      details: formatCellPrice(volumeUsd24Hr, false),
     },
     {
       info: avgPriceRow.info,
       key: avgPriceRow.key,
-      details: formatCellPrice(vwap24Hr),
+      details: formatCellPrice(vwap24Hr, true),
     },
     {
       info: percantageChangeRow.info,
@@ -97,12 +111,10 @@ export const Crypto: FC = () => {
       details: (
         <span
           className={`${
-            Number(changePercent24Hr) >= 0
-              ? styles.positiveNumb
-              : styles.negativeNumb
+            Number(changePercent24Hr) >= 0 ? positiveNumb : negativeNumb
           }`}
         >
-          {formatCellPrice(changePercent24Hr).slice(1)}
+          {formatCellPrice(changePercent24Hr, false)}
           {PERCENT_SIGN}
         </span>
       ),
@@ -115,7 +127,7 @@ export const Crypto: FC = () => {
           href={explorer}
           rel="noreferrer"
           target="_blank"
-          className={styles.webSiteLink}
+          className={webSiteLink}
         >
           {explorer}
         </a>
@@ -142,18 +154,18 @@ export const Crypto: FC = () => {
   };
   return (
     <main>
-      <div className={styles.cryptoTitle}>
-        <Title level={2} type="danger" className={styles.title}>
-          <span className={styles.cryptoTitle_symbol}> {symbol}</span>
+      <div className={cryptoTitle_block}>
+        <Title level={2} type="danger" className={cryptoTitle_block_title}>
+          <span className={cryptoTitle_symbol}> {symbol}</span>
           {name}
         </Title>
       </div>
-      <div className={styles.cryptoCardBlock}>
+      <div className={cryptoCardBlock}>
         <Card
           loading={isLoading}
           title={ENTER_QUANTITY}
           bordered={false}
-          className={styles.cryptoCardBlock_card}
+          className={cryptoCardBlock_card}
         >
           <QuantityInput
             onChange={onChange}
@@ -170,26 +182,26 @@ export const Crypto: FC = () => {
         dataSource={cryptoDetailsDataSource}
         pagination={false}
       />
-      <div className={styles.selectBlock}>
+      <div className={selectBlock}>
         <Select
           options={selectOptions}
           defaultValue={interval}
           loading={isLoading}
           onChange={value => setInterval(value)}
-          className={styles.select}
+          className={select}
         />
       </div>
-      <div className={styles.lineChartBlock}>
+      <div className={lineChartBlock}>
         <LineChart
           cryptoHistory={cryptoHistory}
-          currentPrice={millify(Number(priceUsd))}
+          currentPrice={formatCellPrice(priceUsd, false)}
           cryptoName={name}
         />
       </div>
-      <div className={styles.backButtonBlock}>
+      <div className={backButtonBlock}>
         <Button
           onClick={() => navigateTo(BASE_URL)}
-          className={styles.backButton}
+          className={backButton}
           text={BACK_BUTTON}
         />
       </div>

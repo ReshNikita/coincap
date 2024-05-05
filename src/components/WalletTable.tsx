@@ -1,74 +1,80 @@
 import { FC, useEffect } from "react";
 import { Table } from "antd";
-import millify from "millify";
+import { ColumnsType } from "antd/es/table";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { removeCrypto } from "../redux/walletSlice";
-import { deleteButtonAlt, walletEmpty } from "../constants";
+import {
+  deleteButtonAlt,
+  walletAmountColumn,
+  walletDeleteColumn,
+  walletEmpty,
+  walletNameColumn,
+  walletPriceColumn,
+  walletTotalColumn,
+} from "../constants";
 import deleteIcon from "../icons/delete_icon.svg";
-import { ColumnsType } from "antd/es/table";
 import { CurrencyCountType } from "../types";
+import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/WalletTable.module.scss";
+
+const { deleteIconClass, walletEmptyHeading, walletEmptyBlock } = styles;
+const minTotal: number = 0;
 
 type WalletTableProps = {
   handleTotalChange: (total: number) => void;
 };
 export const WalletTable: FC<WalletTableProps> = ({ handleTotalChange }) => {
-  const walletItems = useAppSelector(state => state.wallet.currencies);
+  const walletCurrencies = useAppSelector(state => state.wallet.currencies);
   const dispatch = useAppDispatch();
 
+  const total = walletCurrencies.reduce(
+    (acc, currency) => acc + currency.total,
+    0
+  );
+  useEffect(() => {
+    handleTotalChange(total);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [walletCurrencies]);
+
   const columns: ColumnsType<CurrencyCountType> = [
+    walletNameColumn,
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
+      title: walletPriceColumn.title,
+      dataIndex: walletPriceColumn.dataIndex,
+      key: walletPriceColumn.key,
       responsive: ["md"],
-      render: (text: number) => millify(text),
+      render: (price: number) => formatCellPrice(price, true),
     },
+    walletAmountColumn,
     {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-    },
-    {
-      title: "Total",
-      dataIndex: "total",
-      key: "total",
+      title: walletTotalColumn.title,
+      dataIndex: walletTotalColumn.dataIndex,
+      key: walletTotalColumn.key,
       responsive: ["sm"],
-      render: (text: any) => <h4>${Math.round(text * 1000) / 1000}</h4>,
+      render: (total: number) => formatCellPrice(total, true),
     },
     {
-      title: "",
-      dataIndex: "sell",
-      key: "sell",
+      title: walletDeleteColumn.title,
+      dataIndex: walletDeleteColumn.dataIndex,
+      key: walletDeleteColumn.key,
       render: () => (
         <img
           src={deleteIcon}
           alt={deleteButtonAlt}
-          className={styles.deleteIcon}
+          className={deleteIconClass}
         />
       ),
-      onCell: (record: CurrencyCountType) => ({
-        onClick: () => dispatch(removeCrypto(record)),
+      onCell: (crypto: CurrencyCountType) => ({
+        onClick: () => dispatch(removeCrypto(crypto)),
       }),
     },
   ];
 
-  const data = walletItems;
-  const total = data.reduce((acc, item) => acc + item.total, 0);
-  useEffect(() => {
-    handleTotalChange(total);
-  }, [data]);
-
-  return total === 0 ? (
-    <div style={{ padding: "30px 0 60px 0" }}>
-      <h1 className={styles.walletEmptyHeading}>{walletEmpty}</h1>
+  return total === minTotal ? (
+    <div className={walletEmptyBlock}>
+      <h2 className={walletEmptyHeading}>{walletEmpty}</h2>
     </div>
   ) : (
-    <Table pagination={false} columns={columns} dataSource={data} />
+    <Table pagination={false} columns={columns} dataSource={walletCurrencies} />
   );
 };

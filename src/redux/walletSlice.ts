@@ -55,8 +55,3 @@ export const walletSlice = createSlice({
 });
 
 export const { addCrypto, removeCrypto } = walletSlice.actions;
-
-/*
-const deletedItem = state.items.filter((i) => i.id === action.payload)[0];
-state.totalPrice -= Math.round(+deletedItem.priceUsd * 100 * deletedItem.count) / 100;
-*/

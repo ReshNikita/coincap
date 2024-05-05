@@ -8,6 +8,7 @@ import { Nullable, cryptos } from "../types";
 import {
   BASE_URL,
   CENTER_ALIGN,
+  PERCENT_SIGN,
   SORT_DIRECTIONS,
   addCryptoColumn,
   altAddIcon,
@@ -23,23 +24,23 @@ import { formatCellPrice } from "../utils/formatCellPrice";
 import addIcon from "../icons/plus_add_icon1.svg";
 import styles from "../styles/CryptoTable.module.scss";
 
+const { positiveNumb, negativeNumb, symbol, pointer, addIconClass } = styles;
+
 const refetchInterval: number = 5000;
 
 export const CryptoTable: FC = () => {
   const { data: cryptos, isLoading } = useGetCryptosQuery("", {
     pollingInterval: refetchInterval,
   });
+
   const { navigateTo } = useNavigateHook();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedCrypto, setSelectedCrypto] = useState<Nullable<cryptos>>(null);
 
   const getFormatChangePercent = (percent: string): ReactElement => (
-    <span
-      className={`${
-        Number(percent) >= 0 ? styles.positiveNumb : styles.negativeNumb
-      }`}
-    >
-      {formatCellPrice(+percent)}
+    <span className={`${Number(percent) >= 0 ? positiveNumb : negativeNumb}`}>
+      {formatCellPrice(percent, true)}
+      {PERCENT_SIGN}
     </span>
   );
 
@@ -86,7 +87,7 @@ export const CryptoTable: FC = () => {
       align: CENTER_ALIGN,
       key: symbolColumn.key,
       responsive: ["lg"],
-      className: styles.symbol,
+      className: symbol,
     },
     {
       title: nameColumn.title,
@@ -100,7 +101,7 @@ export const CryptoTable: FC = () => {
       align: CENTER_ALIGN,
       key: vwapColumn.key,
       responsive: ["md"],
-      render: formatCellPrice,
+      render: (record: string | number) => formatCellPrice(record, true),
     },
     {
       title: changePercentColumn.title,
@@ -117,7 +118,7 @@ export const CryptoTable: FC = () => {
       align: CENTER_ALIGN,
       key: marketCapColumn.key,
       responsive: ["md"],
-      render: formatCellPrice,
+      render: (record: string | number) => formatCellPrice(record, true),
     },
     {
       title: priceColumn.title,
@@ -125,7 +126,7 @@ export const CryptoTable: FC = () => {
       align: CENTER_ALIGN,
       key: priceColumn.key,
       sorter: (a, b) => +a.priceUsd - +b.priceUsd,
-      render: formatCellPrice,
+      render: (record: string | number) => formatCellPrice(record, true),
     },
     {
       title: addCryptoColumn.title,
@@ -139,7 +140,7 @@ export const CryptoTable: FC = () => {
         },
       }),
       render: () => (
-        <img className={styles.addIcon} src={addIcon} alt={altAddIcon} />
+        <img className={addIconClass} src={addIcon} alt={altAddIcon} />
       ),
     },
   ];
@@ -154,7 +155,7 @@ export const CryptoTable: FC = () => {
         columns={columns}
         size="middle"
         sortDirections={SORT_DIRECTIONS}
-        rowClassName={styles.pointer}
+        rowClassName={pointer}
         onRow={crypto => ({
           onClick: () => navigateTo(`${BASE_URL}/${crypto.key}`),
         })}

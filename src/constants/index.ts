@@ -24,6 +24,8 @@ export const HEADER_CONSTANTS = {
   usd: "USD",
   $: DOLLAR_SIGN,
   altWalletImg: "wallet",
+  switchChecked: "Dark",
+  switchUnchecked: "Light",
 } as const;
 
 export const CENTER_ALIGN = "center";
@@ -201,12 +203,52 @@ export const inputNumberPattern: string = "[0-9]*";
 
 export const buyButton: string = "BUY";
 
-export const WalletModal = {
-  modalTitle: "Your wallet",
+export const walletModal = {
+  walletModalTitle: "Your wallet",
   walletEmpty: "It is empty for now",
   totalSumHeading: "Total: " + DOLLAR_SIGN,
   deleteButtonAlt: "deleteButton",
 };
 
-export const { modalTitle, walletEmpty, totalSumHeading, deleteButtonAlt } =
-  WalletModal;
+export const {
+  walletModalTitle,
+  walletEmpty,
+  totalSumHeading,
+  deleteButtonAlt,
+} = walletModal;
+
+export const walletTable = {
+  walletNameColumn: {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+  },
+  walletPriceColumn: {
+    title: "Price",
+    dataIndex: "price",
+    key: "price",
+  },
+  walletAmountColumn: {
+    title: "Amount",
+    dataIndex: "amount",
+    key: "amount",
+  },
+  walletTotalColumn: {
+    title: "Total",
+    dataIndex: "total",
+    key: "total",
+  },
+  walletDeleteColumn: {
+    title: "",
+    dataIndex: "delete",
+    key: "delete",
+  },
+} as const;
+
+export const {
+  walletNameColumn,
+  walletPriceColumn,
+  walletAmountColumn,
+  walletTotalColumn,
+  walletDeleteColumn,
+} = walletTable;

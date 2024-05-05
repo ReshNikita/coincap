@@ -9,6 +9,8 @@ import {
 } from "../constants";
 import styles from "../styles/QuantityInput.module.scss";
 
+const { quantutyInputBlock, inputNumber, buyCryptoButton } = styles;
+
 type QuantityInputProps = {
   amount: number;
   onChange: (value: valueType | null) => void;
@@ -24,12 +26,13 @@ export const QuantityInput: FC<QuantityInputProps> = ({
   useEffect(() => {
     inputFocus.current && inputFocus.current.focus();
   }, []);
+
   return (
-    <div className={styles.quantutyInputBlock}>
+    <div className={quantutyInputBlock}>
       <InputNumber
         size="large"
         type="number"
-        className={styles.inputNumber}
+        className={inputNumber}
         value={amount}
         onChange={onChange}
         pattern={inputNumberPattern}
@@ -40,7 +43,7 @@ export const QuantityInput: FC<QuantityInputProps> = ({
       <Button
         text={buyButton}
         onClick={addToCart}
-        className={styles.buyCryptoButton}
+        className={buyCryptoButton}
       />
     </div>
   );
