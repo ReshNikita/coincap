@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcoincap=self.webpackChunkcoincap||[]).push([[332],{9332:(e,r,s)=>{s.r(r),s.d(r,{ErrorPage:()=>a});var c=s(7764),n=s(579);const a=e=>{let{error:r}=e;return(0,n.jsxs)("div",{role:"alert",children:[(0,n.jsx)("h1",{children:c.ff}),(0,n.jsx)("p",{children:r.message})]})}}}]);
+//# sourceMappingURL=332.14c5f784.chunk.js.map

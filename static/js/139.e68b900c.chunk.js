@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcoincap=self.webpackChunkcoincap||[]).push([[139],{520:(c,n,s)=>{s.r(n),s.d(n,{NotFoundPage:()=>j});var e=s(8417),i=s(2134),a=s(7764),r=s(579);const{OOPS_YOU_LOST:d,GET_BACK:h,BACK_BUTTON:l,ERROR_404:t}=a.jp,j=()=>{const{navigateTo:c}=(0,i.K)();return(0,r.jsx)("main",{children:(0,r.jsxs)("div",{children:[(0,r.jsx)("h1",{children:t}),(0,r.jsx)("p",{children:d}),(0,r.jsx)("p",{children:h}),(0,r.jsx)("div",{children:(0,r.jsx)(e.$,{className:"",text:l,onClick:()=>c(a.C1)})})]})})}}}]);
+//# sourceMappingURL=139.e68b900c.chunk.js.map

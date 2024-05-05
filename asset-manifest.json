@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/coincap/static/css/main.19d48341.css",
+    "main.js": "/coincap/static/js/main.7370720d.js",
+    "static/js/139.e68b900c.chunk.js": "/coincap/static/js/139.e68b900c.chunk.js",
+    "static/css/986.151c5bbb.chunk.css": "/coincap/static/css/986.151c5bbb.chunk.css",
+    "static/js/986.0134a85b.chunk.js": "/coincap/static/js/986.0134a85b.chunk.js",
+    "static/js/332.14c5f784.chunk.js": "/coincap/static/js/332.14c5f784.chunk.js",
+    "static/js/84.faad372a.chunk.js": "/coincap/static/js/84.faad372a.chunk.js",
+    "static/media/wallet.svg": "/coincap/static/media/wallet.1779fff6ef8de16e8b7f0e393e81747a.svg",
+    "static/media/plus_add_icon1.svg": "/coincap/static/media/plus_add_icon1.07e4bdcebac20f86c9b7568831a4e7bc.svg",
+    "static/media/delete_icon.svg": "/coincap/static/media/delete_icon.fd02b786556b5b7efebc7a25436e82e0.svg",
+    "index.html": "/coincap/index.html",
+    "main.19d48341.css.map": "/coincap/static/css/main.19d48341.css.map",
+    "main.7370720d.js.map": "/coincap/static/js/main.7370720d.js.map",
+    "139.e68b900c.chunk.js.map": "/coincap/static/js/139.e68b900c.chunk.js.map",
+    "986.151c5bbb.chunk.css.map": "/coincap/static/css/986.151c5bbb.chunk.css.map",
+    "986.0134a85b.chunk.js.map": "/coincap/static/js/986.0134a85b.chunk.js.map",
+    "332.14c5f784.chunk.js.map": "/coincap/static/js/332.14c5f784.chunk.js.map",
+    "84.faad372a.chunk.js.map": "/coincap/static/js/84.faad372a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.19d48341.css",
+    "static/js/main.7370720d.js"
+  ]
+}
