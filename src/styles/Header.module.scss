@@ -1,4 +1,4 @@
-$whiteColor: #ffffff;
+$whiteColor: hsl(0, 0%, 100%);
 
 .headerClass {
   display: flex;
@@ -15,9 +15,6 @@ $whiteColor: #ffffff;
   }
 }
 
-/* border-bottom: 1px solid lightgray;
-  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1); */
-
 .popularCryptoBlocks:not(:last-child) {
   padding-right: 20px;
 }
@@ -33,11 +30,11 @@ $whiteColor: #ffffff;
 }
 
 .popularCrypto_switch {
-  background-color: #636060 !important;
+  background-color: hsl(0, 2%, 38%) !important;
 }
 
 .popularCrypto_switch_light {
-  background-color: #420d55 !important;
+  background-color: hsl(284, 73%, 19%) !important;
 }
 
 .total_block {

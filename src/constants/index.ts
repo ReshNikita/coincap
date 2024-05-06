@@ -206,7 +206,7 @@ export const buyButton: string = "BUY";
 export const walletModal = {
   walletModalTitle: "Your wallet",
   walletEmpty: "It is empty for now",
-  totalSumHeading: "Total: " + DOLLAR_SIGN,
+  totalSumHeading: "Total: ",
   deleteButtonAlt: "deleteButton",
 };
 

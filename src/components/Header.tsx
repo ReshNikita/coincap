@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Switch, Typography } from "antd";
 import { WalletModal } from "./WalletModal";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -9,6 +9,7 @@ import { HEADER_CONSTANTS } from "../constants";
 import walletLogo from "../icons/wallet.svg";
 import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/Header.module.scss";
+import { saveState } from "../redux/walletSlice";
 
 const {
   popularCryptoBlocks,
@@ -39,6 +40,10 @@ export const Header: FC = () => {
   const [visible, setVisible] = useState(false);
   const dispatch = useAppDispatch();
   const { data: cryptos } = useGetCryptosQuery("");
+
+  useEffect(() => {
+    dispatch(saveState());
+  }, [dispatch, totalQuantity]);
 
   const popularCrypto = cryptos?.data
     ?.map(({ id, name, priceUsd }: cryptos) => (

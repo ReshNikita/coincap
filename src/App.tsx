@@ -19,7 +19,9 @@ const NotFoundPage: LazyExoticComponent<FC> = lazy(() =>
 );
 
 const Crypto: LazyExoticComponent<FC> = lazy(() =>
-  import("./components/Crypto").then(({ Crypto }) => ({ default: Crypto }))
+  import("./pages/CryptoPage").then(({ CryptoPage }) => ({
+    default: CryptoPage,
+  }))
 );
 
 const router = createBrowserRouter(
@@ -34,9 +36,10 @@ const router = createBrowserRouter(
   )
 );
 
+const { defaultAlgorithm, darkAlgorithm } = theme;
+
 export const App: FC = () => {
   const { darkTheme } = useAppSelector(state => state.theme);
-  const { defaultAlgorithm, darkAlgorithm } = theme;
 
   return (
     <ConfigProvider

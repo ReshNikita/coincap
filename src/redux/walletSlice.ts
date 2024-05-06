@@ -5,25 +5,16 @@ type initialStateType = {
   currencies: CurrencyCountType[];
   totalQuantity: number;
 };
-
 const initialState: initialStateType = {
   currencies: [],
   totalQuantity: 0,
-};
-
-type AddCryptoPayloadType = {
-  name: string;
-  key: string;
-  amount: number;
-  total: number;
-  price: string;
 };
 
 export const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    addCrypto: (state, action: PayloadAction<AddCryptoPayloadType>) => {
+    addCrypto: (state, action: PayloadAction<CurrencyCountType>) => {
       const { key, amount, total } = action.payload;
       const existingCurrencyIdx = state.currencies.findIndex(
         currency => currency.key === key
@@ -39,7 +30,7 @@ export const walletSlice = createSlice({
         0
       );
     },
-    removeCrypto: (state, action) => {
+    removeCrypto: (state, action: PayloadAction<CurrencyCountType>) => {
       const deletedItem = state.currencies.filter(
         currency => currency.total === action.payload.total
       )[0];
@@ -51,7 +42,24 @@ export const walletSlice = createSlice({
         state.totalQuantity = 0;
       }
     },
+    saveState: state => {
+      localStorage.setItem("currencies", JSON.stringify(state.currencies));
+      localStorage.setItem(
+        "totalQuantity",
+        JSON.stringify(state.totalQuantity)
+      );
+    },
+    loadState: state => {
+      const savedCurrencies = localStorage.getItem("currencies");
+      const savedTotalQuantity = localStorage.getItem("totalQuantity");
+
+      if (savedCurrencies && savedTotalQuantity) {
+        state.currencies = JSON.parse(savedCurrencies);
+        state.totalQuantity = Number(savedTotalQuantity);
+      }
+    },
   },
 });
 
-export const { addCrypto, removeCrypto } = walletSlice.actions;
+export const { addCrypto, removeCrypto, saveState, loadState } =
+  walletSlice.actions;

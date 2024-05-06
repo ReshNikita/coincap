@@ -16,6 +16,7 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(coincapApi.middleware),
 });
+store.dispatch(walletSlice.actions.loadState());
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

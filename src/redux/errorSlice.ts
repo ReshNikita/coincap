@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import { ErrorProps, Nullable } from "../types";
 
 type initialStateProps = {

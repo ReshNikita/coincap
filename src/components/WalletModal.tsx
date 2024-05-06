@@ -3,8 +3,8 @@ import { FC, useState, Dispatch, SetStateAction, ReactElement } from "react";
 import { WalletTable } from "./WalletTable";
 import { useAppSelector } from "../redux/hooks";
 import { walletModalTitle, totalSumHeading, PERCENT_SIGN } from "../constants";
-import styles from "../styles/WalletModal.module.scss";
 import { formatCellPrice } from "../utils/formatCellPrice";
+import styles from "../styles/WalletModal.module.scss";
 
 const { positiveNumb, negativeNumb, modalTitle, walletModalBlock } = styles;
 const modalWidth: number = 700;
@@ -47,7 +47,7 @@ export const WalletModal: FC<WalletModalProps> = ({ visible, setVisible }) => {
       <div className={walletModalBlock}>
         <h2>
           {totalSumHeading}
-          {totalQuantity}
+          {formatCellPrice(totalQuantity, true)}
         </h2>
         <h2>
           <span

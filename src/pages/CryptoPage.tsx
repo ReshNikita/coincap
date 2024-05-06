@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Typography, Card, Table, Select, InputNumberProps } from "antd";
-import { LineChart } from "./LineChart";
-import { QuantityInput } from "./QuantityInput";
+import { LineChart } from "../components/LineChart";
+import { QuantityInput } from "../components/QuantityInput";
 import { Button } from "../components/Button";
 import {
   useGetCryptoDetailQuery,
@@ -30,7 +30,7 @@ import {
   selectOptions,
   websiteRow,
 } from "../constants";
-import styles from "../styles/Crypto.module.scss";
+import styles from "../styles/CryptoPage.module.scss";
 
 const { Title } = Typography;
 const defaultAmount: number = 0;
@@ -50,7 +50,7 @@ const {
   backButtonBlock,
 } = styles;
 
-export const Crypto: FC = () => {
+export const CryptoPage: FC = () => {
   const { navigateTo } = useNavigateHook();
   const { id } = useParams<{ id: string }>();
   const [interval, setInterval] = useState(Intervals.DAY);
@@ -148,7 +148,7 @@ export const Crypto: FC = () => {
         amount,
         total: amount * Number(priceUsd),
       };
-      dispatch(addCrypto(addedCrypto));
+      amount > 0 && dispatch(addCrypto(addedCrypto));
       setAmount(defaultAmount);
     }
   };
