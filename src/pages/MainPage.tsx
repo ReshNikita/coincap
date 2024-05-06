@@ -6,7 +6,6 @@ import { useNavigateHook } from "../hooks/useNavigateHook";
 import { useGetCryptosQuery } from "../api/coincapApi";
 import { Nullable, cryptos } from "../types";
 import {
-  BASE_URL,
   CENTER_ALIGN,
   PERCENT_SIGN,
   SORT_DIRECTIONS,
@@ -157,7 +156,7 @@ export const MainPage: FC = () => {
         sortDirections={SORT_DIRECTIONS}
         rowClassName={pointer}
         onRow={crypto => ({
-          onClick: () => navigateTo(`${BASE_URL}/${crypto.key}`),
+          onClick: () => navigateTo(`/${crypto.key}`),
         })}
       />
       <BuyCryptoModal

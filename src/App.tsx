@@ -10,7 +10,6 @@ import { LayoutComponent } from "./layout/LayoutComponent";
 import { MainPage } from "./pages/MainPage";
 import { withWrapper } from "./hoc/withWrapper";
 import { useAppSelector } from "./redux/hooks";
-import { BASE_URL } from "./constants";
 
 const NotFoundPage: LazyExoticComponent<FC> = lazy(() =>
   import("./pages/NotFoundPage").then(({ NotFoundPage }) => ({

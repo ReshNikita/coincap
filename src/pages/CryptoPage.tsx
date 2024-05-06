@@ -15,7 +15,6 @@ import { formatCellPrice } from "../utils/formatCellPrice";
 import { cryptoHistoryType, cryptos } from "../types";
 import {
   BACK_BUTTON,
-  BASE_URL,
   ENTER_QUANTITY,
   Intervals,
   PERCENT_SIGN,
@@ -200,7 +199,7 @@ export const CryptoPage: FC = () => {
       </div>
       <div className={backButtonBlock}>
         <Button
-          onClick={() => navigateTo(BASE_URL)}
+          onClick={() => navigateTo("/")}
           className={backButton}
           text={BACK_BUTTON}
         />
