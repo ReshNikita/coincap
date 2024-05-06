@@ -10,7 +10,10 @@ export const Copyright: FC = memo(() => {
   const { darkTheme } = useAppSelector(state => state.theme);
   return (
     <footer className={footerClass}>
-      <h2 className={`${copyright} ${darkTheme && dark}`}>
+      <h2
+        data-testid="delete-button"
+        className={`${copyright} ${darkTheme && dark}`}
+      >
         {COPYRIGHT} {getYear()}
       </h2>
     </footer>

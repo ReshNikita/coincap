@@ -149,7 +149,7 @@ export const MainPage: FC = () => {
     <main>
       <Table
         loading={isLoading}
-        pagination={{ position: ["bottomCenter"] }}
+        pagination={{ position: ["bottomCenter"], size: "default" }}
         bordered={true}
         dataSource={dataTable}
         columns={columns}
