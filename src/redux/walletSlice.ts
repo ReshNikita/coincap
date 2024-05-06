@@ -6,8 +6,9 @@ type initialStateType = {
   totalQuantity: number;
 };
 const initialState: initialStateType = {
-  currencies: [],
-  totalQuantity: 0,
+  currencies: JSON.parse(localStorage.getItem("currencies") as string) || [],
+  totalQuantity:
+    JSON.parse(localStorage.getItem("totalQuantity") as string) || 0,
 };
 
 export const walletSlice = createSlice({
