@@ -27,9 +27,9 @@ const Crypto: LazyExoticComponent<FC> = lazy(() =>
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path={`${BASE_URL}`} element={<LayoutComponent />}>
+      <Route path={"/"} element={<LayoutComponent />}>
         <Route index element={<MainPage />} />
-        <Route path={`${BASE_URL}/:id`} element={withWrapper(<Crypto />)} />
+        <Route path={`/:id`} element={withWrapper(<Crypto />)} />
         <Route path="*" element={withWrapper(<NotFoundPage />)} />
       </Route>
     </Route>

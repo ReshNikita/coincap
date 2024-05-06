@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Loader } from "../components/Loader"; // Adjust the import path as necessary
+import { Loader } from "../components/Loader";
 
 describe("Loader", () => {
   it("renders the Loader component", () => {
