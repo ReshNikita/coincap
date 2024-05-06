@@ -1,10 +1,18 @@
 import { Modal } from "antd";
-import { FC, useState, Dispatch, SetStateAction, ReactElement } from "react";
+import {
+  FC,
+  useState,
+  Dispatch,
+  SetStateAction,
+  ReactElement,
+  useEffect,
+} from "react";
 import { WalletTable } from "./WalletTable";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { walletModalTitle, totalSumHeading, PERCENT_SIGN } from "../constants";
 import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/WalletModal.module.scss";
+import { loadState, saveState } from "../redux/walletSlice";
 
 const { positiveNumb, negativeNumb, modalTitle, walletModalBlock } = styles;
 const modalWidth: number = 700;
@@ -21,6 +29,10 @@ export const WalletModal: FC<WalletModalProps> = ({ visible, setVisible }) => {
     setTotal(value);
   };
   const { totalQuantity } = useAppSelector(state => state.wallet);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(saveState());
+  }, [dispatch, totalQuantity]);
 
   const latestTransaction = (totalQuantity - previousTotal).toFixed(2);
   let percent = +((+latestTransaction / previousTotal) * 100).toFixed(2);

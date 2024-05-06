@@ -9,7 +9,7 @@ import { HEADER_CONSTANTS } from "../constants";
 import walletLogo from "../icons/wallet.svg";
 import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/Header.module.scss";
-import { saveState } from "../redux/walletSlice";
+import { loadState, saveState } from "../redux/walletSlice";
 
 const {
   popularCryptoBlocks,
@@ -42,7 +42,7 @@ export const Header: FC = () => {
   const { data: cryptos } = useGetCryptosQuery("");
 
   useEffect(() => {
-    dispatch(saveState());
+    dispatch(loadState());
   }, [dispatch, totalQuantity]);
 
   const popularCrypto = cryptos?.data
