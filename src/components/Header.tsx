@@ -9,7 +9,7 @@ import { HEADER_CONSTANTS } from "../constants";
 import walletLogo from "../icons/wallet.svg";
 import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/Header.module.scss";
-import { loadState, saveState } from "../redux/walletSlice";
+import { saveState } from "../redux/walletSlice";
 
 const {
   popularCryptoBlocks,
@@ -37,12 +37,12 @@ const thirdPopularCrypto: number = 3;
 export const Header: FC = () => {
   const { darkTheme } = useAppSelector(state => state.theme);
   const { totalQuantity } = useAppSelector(state => state.wallet);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { data: cryptos } = useGetCryptosQuery("");
 
   useEffect(() => {
-    dispatch(loadState());
+    dispatch(saveState());
   }, [dispatch, totalQuantity]);
 
   const popularCrypto = cryptos?.data

@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { walletModalTitle, totalSumHeading, PERCENT_SIGN } from "../constants";
 import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/WalletModal.module.scss";
-import { loadState, saveState } from "../redux/walletSlice";
+import { saveState } from "../redux/walletSlice";
 
 const { positiveNumb, negativeNumb, modalTitle, walletModalBlock } = styles;
 const modalWidth: number = 700;
@@ -36,6 +36,7 @@ export const WalletModal: FC<WalletModalProps> = ({ visible, setVisible }) => {
 
   const latestTransaction = (totalQuantity - previousTotal).toFixed(2);
   let percent = +((+latestTransaction / previousTotal) * 100).toFixed(2);
+
   if (previousTotal === 0) percent = 100;
   if (+latestTransaction === 0) percent = 100;
   if (totalQuantity === 0 && +latestTransaction === 0) percent = 0;

@@ -1,11 +1,17 @@
 import { SortOrder } from "antd/es/table/interface";
 
-export const BASE_URL: string = "/coincap";
-
 export const DOLLAR_SIGN: string = "$";
 export const PERCENT_SIGN: string = "%";
 export const ENTER_QUANTITY: string = "Enter quantity:";
 export const BACK_BUTTON: string = "BACK";
+export const COPYRIGHT: string = "Copyright © Coincap";
+export const ERROR: string = "Something went wrong";
+export const CENTER_ALIGN = "center";
+export const SORT_DIRECTIONS: SortOrder[] = ["descend", "ascend"];
+export const MODAL_TITLE: string = "Buy crypto:";
+export const inputNumberPlaceholder: string = "Type quantity...";
+export const inputNumberPattern: string = "[0-9]*";
+export const buyButton: string = "BUY";
 
 export const NOT_FOUND_PAGE = {
   ERROR_404: "404",
@@ -13,10 +19,6 @@ export const NOT_FOUND_PAGE = {
   GET_BACK: "Let's get you back",
   BACK_BUTTON: BACK_BUTTON,
 } as const;
-
-export const COPYRIGHT: string = "Copyright © Coincap";
-
-export const ERROR: string = "Something went wrong";
 
 export const HEADER_CONSTANTS = {
   popular_crypto: "Popular cryptocurrencies:",
@@ -28,9 +30,7 @@ export const HEADER_CONSTANTS = {
   switchUnchecked: "Light",
 } as const;
 
-export const CENTER_ALIGN = "center";
-
-export const CRYPTO_TABLE_CONSTANTS = {
+const CRYPTO_TABLE_CONSTANTS = {
   altAddIcon: "addIcon",
   rankColumn: {
     title: "№",
@@ -86,11 +86,7 @@ export const {
   addCryptoColumn,
 } = CRYPTO_TABLE_CONSTANTS;
 
-export const SORT_DIRECTIONS: SortOrder[] = ["descend", "ascend"];
-
-export const MODAL_TITLE: string = "Buy crypto:";
-
-export const cryptoColumns = {
+const cryptoColumns = {
   infoColumn: {
     title: "Info",
     key: "info",
@@ -105,7 +101,7 @@ export const cryptoColumns = {
 
 export const { infoColumn, currencyDetailsColumn } = cryptoColumns;
 
-export const cryptoDetailsData = {
+const cryptoDetailsData = {
   costRow: {
     info: "Cost",
     key: "cost",
@@ -158,7 +154,7 @@ export enum Intervals {
   DAY = "d1",
 }
 
-export enum LabelIntervals {
+enum LabelIntervals {
   ONE_MINUTE = "one minute",
   FIVE_MINUTE = "5 minutes",
   FIFTEEN_MINUTE = "15 minutes",
@@ -198,12 +194,7 @@ export const LineChartDataSets = {
   borderColor: "#673fd7",
 } as const;
 
-export const inputNumberPlaceholder: string = "Type quantity...";
-export const inputNumberPattern: string = "[0-9]*";
-
-export const buyButton: string = "BUY";
-
-export const walletModal = {
+const walletModal = {
   walletModalTitle: "Your wallet",
   walletEmpty: "It is empty for now",
   totalSumHeading: "Total: ",
@@ -217,7 +208,7 @@ export const {
   deleteButtonAlt,
 } = walletModal;
 
-export const walletTable = {
+const walletTable = {
   walletNameColumn: {
     title: "Name",
     dataIndex: "name",
