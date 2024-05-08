@@ -4,7 +4,8 @@ import { DOLLAR_SIGN } from "../constants";
 export const formatCellPrice = (
   price: string | number,
   includeDollarSign: boolean
-): string => {
+): string | undefined => {
+  if (isNaN(+price)) return;
   const formatWithMillify = (num: number | string) =>
     millify(Number(num), {
       units: ["", "K", "M", "B", "T"],
@@ -12,6 +13,6 @@ export const formatCellPrice = (
       lowercase: true,
     });
   return includeDollarSign
-    ? `${DOLLAR_SIGN}${formatWithMillify(Number(price))}`
+    ? DOLLAR_SIGN + formatWithMillify(Number(price))
     : formatWithMillify(Number(price));
 };

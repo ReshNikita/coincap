@@ -9,10 +9,10 @@ import {
 } from "react";
 import { WalletTable } from "./WalletTable";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { saveState } from "../redux/walletSlice";
 import { walletModalTitle, totalSumHeading, PERCENT_SIGN } from "../constants";
 import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/WalletModal.module.scss";
-import { saveState } from "../redux/walletSlice";
 
 const { positiveNumb, negativeNumb, modalTitle, walletModalBlock } = styles;
 const modalWidth: number = 700;

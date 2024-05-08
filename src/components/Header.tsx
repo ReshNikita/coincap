@@ -3,13 +3,13 @@ import { Switch, Typography } from "antd";
 import { WalletModal } from "./WalletModal";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { toggleTheme } from "../redux/themeSlice";
+import { saveState } from "../redux/walletSlice";
 import { useGetCryptosQuery } from "../api/coincapApi";
 import { cryptos } from "../types";
 import { HEADER_CONSTANTS } from "../constants";
 import walletLogo from "../icons/wallet.svg";
 import { formatCellPrice } from "../utils/formatCellPrice";
 import styles from "../styles/Header.module.scss";
-import { saveState } from "../redux/walletSlice";
 
 const {
   popularCryptoBlocks,
@@ -21,8 +21,9 @@ const {
   total_block,
   total_block_image,
   totalClass,
+  popularCryptoHeading,
 } = styles;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const {
   popular_crypto,
   total,
@@ -57,9 +58,7 @@ export const Header: FC = () => {
   return (
     <header className={headerClass}>
       <div className={`${darkTheme && dark}`}>
-        <Title level={3}>
-          <Text underline>{popular_crypto}</Text>
-        </Title>
+        <h2 className={popularCryptoHeading}>{popular_crypto}</h2>
         <div className={popularCryptoClass}>{popularCrypto}</div>
       </div>
       <Switch

@@ -1,9 +1,16 @@
+@use "./styles.scss" as negativeNumbMixin;
+@use "./styles.scss" as positiveNumbMixin;
+
+.mainBlock {
+  margin-top: 15px;
+}
+
 .negativeNumb {
-  color: hsl(0, 100%, 50%);
+  @include negativeNumbMixin.negativeNumbStyle;
 }
 
 .positiveNumb {
-  color: hsl(120, 100%, 25%);
+  @include positiveNumbMixin.positiveNumbStyle;
 }
 
 .addIconClass {

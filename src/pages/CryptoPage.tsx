@@ -4,6 +4,7 @@ import { Typography, Card, Table, Select, InputNumberProps } from "antd";
 import { LineChart } from "../components/LineChart";
 import { QuantityInput } from "../components/QuantityInput";
 import { Button } from "../components/Button";
+import { NotFoundPage } from "./NotFoundPage";
 import {
   useGetCryptoDetailQuery,
   useGetCryptoHistoryQuery,
@@ -53,7 +54,7 @@ export const CryptoPage: FC = () => {
   const { navigateTo } = useNavigateHook();
   const { id } = useParams<{ id: string }>();
   const [interval, setInterval] = useState(Intervals.DAY);
-  const { data, isLoading } = useGetCryptoDetailQuery(id as string);
+  const { data, isLoading, error } = useGetCryptoDetailQuery(id as string);
   const { data: cryptoHistory } = useGetCryptoHistoryQuery<{
     data: cryptoHistoryType;
   }>({
@@ -80,47 +81,40 @@ export const CryptoPage: FC = () => {
 
   const cryptoDetailsDataSource = [
     {
-      info: costRow.info,
-      key: costRow.key,
+      ...costRow,
       details: formatCellPrice(priceUsd, true),
     },
     {
-      info: offerRow.info,
-      key: offerRow.key,
+      ...offerRow,
       details: formatCellPrice(supply, false),
     },
     {
-      info: issuedAssets.info,
-      key: issuedAssets.key,
+      ...issuedAssets,
       details: formatCellPrice(maxSupply, false),
     },
     {
-      info: goodsVolumeRow.info,
-      key: goodsVolumeRow.key,
+      ...goodsVolumeRow,
       details: formatCellPrice(volumeUsd24Hr, false),
     },
     {
-      info: avgPriceRow.info,
-      key: avgPriceRow.key,
+      ...avgPriceRow,
       details: formatCellPrice(vwap24Hr, true),
     },
     {
-      info: percantageChangeRow.info,
-      key: percantageChangeRow.key,
+      ...percantageChangeRow,
       details: (
         <span
           className={`${
             Number(changePercent24Hr) >= 0 ? positiveNumb : negativeNumb
           }`}
         >
-          {formatCellPrice(changePercent24Hr, false)}
-          {PERCENT_SIGN}
+          {changePercent24Hr &&
+            formatCellPrice(changePercent24Hr, false) + PERCENT_SIGN}
         </span>
       ),
     },
     {
-      info: websiteRow.info,
-      key: websiteRow.key,
+      ...websiteRow,
       details: (
         <a
           href={explorer}
@@ -151,11 +145,13 @@ export const CryptoPage: FC = () => {
       setAmount(defaultAmount);
     }
   };
-  return (
+  return error ? (
+    <NotFoundPage />
+  ) : (
     <main>
       <div className={cryptoTitle_block}>
         <Title level={2} type="danger" className={cryptoTitle_block_title}>
-          <span className={cryptoTitle_symbol}> {symbol}</span>
+          <span className={symbol && cryptoTitle_symbol}>{symbol}</span>
           {name}
         </Title>
       </div>
@@ -193,7 +189,7 @@ export const CryptoPage: FC = () => {
       <div className={lineChartBlock}>
         <LineChart
           cryptoHistory={cryptoHistory}
-          currentPrice={formatCellPrice(priceUsd, false)}
+          currentPrice={formatCellPrice(priceUsd, false) as string}
           cryptoName={name}
         />
       </div>

@@ -23,7 +23,8 @@ import { formatCellPrice } from "../utils/formatCellPrice";
 import addIcon from "../icons/plus_add_icon1.svg";
 import styles from "../styles/MainPage.module.scss";
 
-const { positiveNumb, negativeNumb, symbol, pointer, addIconClass } = styles;
+const { positiveNumb, negativeNumb, symbol, pointer, addIconClass, mainBlock } =
+  styles;
 
 const refetchInterval: number = 5000;
 
@@ -74,63 +75,47 @@ export const MainPage: FC = () => {
 
   const columns: ColumnsType<cryptos> = [
     {
-      title: rankColumn.title,
-      dataIndex: rankColumn.dataIndex,
+      ...rankColumn,
       align: CENTER_ALIGN,
-      key: rankColumn.key,
       responsive: ["lg"],
     },
     {
-      title: symbolColumn.title,
-      dataIndex: symbolColumn.dataIndex,
+      ...symbolColumn,
       align: CENTER_ALIGN,
-      key: symbolColumn.key,
       responsive: ["lg"],
       className: symbol,
     },
     {
-      title: nameColumn.title,
-      dataIndex: nameColumn.dataIndex,
+      ...nameColumn,
       align: CENTER_ALIGN,
-      key: nameColumn.key,
     },
     {
-      title: vwapColumn.title,
-      dataIndex: vwapColumn.dataIndex,
+      ...vwapColumn,
       align: CENTER_ALIGN,
-      key: vwapColumn.key,
       responsive: ["md"],
       render: (record: string | number) => formatCellPrice(record, true),
     },
     {
-      title: changePercentColumn.title,
-      dataIndex: changePercentColumn.dataIndex,
+      ...changePercentColumn,
       align: CENTER_ALIGN,
-      key: changePercentColumn.key,
       responsive: ["sm"],
       sorter: (a, b) => +a.changePercent24Hr - +b.changePercent24Hr,
       render: getFormatChangePercent,
     },
     {
-      title: marketCapColumn.title,
-      dataIndex: marketCapColumn.dataIndex,
+      ...marketCapColumn,
       align: CENTER_ALIGN,
-      key: marketCapColumn.key,
       responsive: ["md"],
       render: (record: string | number) => formatCellPrice(record, true),
     },
     {
-      title: priceColumn.title,
-      dataIndex: priceColumn.dataIndex,
+      ...priceColumn,
       align: CENTER_ALIGN,
-      key: priceColumn.key,
       sorter: (a, b) => +a.priceUsd - +b.priceUsd,
       render: (record: string | number) => formatCellPrice(record, true),
     },
     {
-      title: addCryptoColumn.title,
-      dataIndex: addCryptoColumn.dataIndex,
-      key: addCryptoColumn.key,
+      ...addCryptoColumn,
       align: CENTER_ALIGN,
       onCell: record => ({
         onClick: event => {
@@ -145,7 +130,7 @@ export const MainPage: FC = () => {
   ];
 
   return (
-    <main>
+    <main className={mainBlock}>
       <Table
         loading={isLoading}
         pagination={{ position: ["bottomCenter"], size: "default" }}

@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { Loader } from "./Loader";
 import { cryptoHistoryType } from "../types";
 import { LineChartDataSets, LineChartOptionsTitle } from "../constants";
 import styles from "../styles/LineChart.module.scss";
@@ -47,6 +48,7 @@ export const LineChart: FC<LineChartProps> = ({
       new Date(cryptoHistory.data[i].time).toLocaleDateString()
     );
   }
+
   const options = {
     maintainAspectRatio: false,
     responsive: true,
@@ -84,6 +86,7 @@ export const LineChart: FC<LineChartProps> = ({
 
   const cryptoData = {
     labels: cryptoTimestamp,
+
     datasets: [
       {
         label,
@@ -94,5 +97,9 @@ export const LineChart: FC<LineChartProps> = ({
     ],
   };
 
-  return <Line data={cryptoData} options={options} className={styles.line} />;
+  return !currentPrice && !cryptoName ? (
+    <Loader />
+  ) : (
+    <Line data={cryptoData} options={options} className={styles.line} />
+  );
 };

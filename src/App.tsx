@@ -28,7 +28,7 @@ const router = createBrowserRouter(
     <Route>
       <Route path={"/"} element={<LayoutComponent />}>
         <Route index element={<MainPage />} />
-        <Route path={`/:id`} element={withWrapper(<Crypto />)} />
+        <Route path={":id"} element={withWrapper(<Crypto />)} />
         <Route path="*" element={withWrapper(<NotFoundPage />)} />
       </Route>
     </Route>

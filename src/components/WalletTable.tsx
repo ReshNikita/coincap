@@ -39,24 +39,18 @@ export const WalletTable: FC<WalletTableProps> = ({ handleTotalChange }) => {
   const columns: ColumnsType<CurrencyCountType> = [
     walletNameColumn,
     {
-      title: walletPriceColumn.title,
-      dataIndex: walletPriceColumn.dataIndex,
-      key: walletPriceColumn.key,
+      ...walletPriceColumn,
       responsive: ["md"],
       render: (price: number) => formatCellPrice(price, true),
     },
     walletAmountColumn,
     {
-      title: walletTotalColumn.title,
-      dataIndex: walletTotalColumn.dataIndex,
-      key: walletTotalColumn.key,
+      ...walletTotalColumn,
       responsive: ["sm"],
       render: (total: number) => formatCellPrice(total, true),
     },
     {
-      title: walletDeleteColumn.title,
-      dataIndex: walletDeleteColumn.dataIndex,
-      key: walletDeleteColumn.key,
+      ...walletDeleteColumn,
       render: () => (
         <img
           src={deleteIcon}
