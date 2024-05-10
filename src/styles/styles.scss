@@ -3,6 +3,12 @@ body {
   height: 100%;
 }
 
+.layout {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+}
+
 .ant-modal-title {
   text-align: center;
 }

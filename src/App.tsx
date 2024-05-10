@@ -46,7 +46,7 @@ export const App: FC = () => {
         algorithm: darkTheme ? darkAlgorithm : defaultAlgorithm,
       }}
     >
-      <Layout style={{ width: "100%", minHeight: "100vh", height: "auto" }}>
+      <Layout className="layout">
         <RouterProvider router={router} />
       </Layout>
     </ConfigProvider>
